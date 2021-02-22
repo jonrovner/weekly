@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <title>what we eat</title>    
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Open+Sans:wght@200&display=swap" rel="stylesheet"> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="app/scss/style.css">
+    </head>
+    
+    <body onload="">
+       
+    <div id="wrapper"> 
+        <header>
+            <h1 class="title">WeekEat</h1>
+        </header>
+        
+        <main>   
+            <div class="container week">
+                <div class="item" style="visibility: hidden;"></div>
+                <div class="item">Monday</div>
+                <div class="item">Tuesday</div>
+                <div class="item">Wednesday</div>
+                <div class="item">Thursday</div>
+                <div class="item">Friday</div>
+                <div class="item">Saturday</div>
+                <div class="item">Sunday</div>
+                <div class="item">Lunch</div>
+                <div class="item main" id="main1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="item main" id="main2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="item main" id="main3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="item main" id="main4" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="item main" id="main5" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="item main" id="main6" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="item main" id="main7" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="item">Dinner</div>
+                <div class="item main" id="main8" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="item main" id="main9" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="item main" id="main10" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="item main" id="main11" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="item main" id="main12" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="item main" id="main13" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <div class="item main" id="main14" ondrop="drop(event)" ondragover="allowDrop(event)"></div>    
+            </div>
+            <p class="infotext">Drag dishes into calendar. Click on added dishes to delete</p>
+            <div class="maincontainer">
+            <div class="menu" id="menu">
+            </div>         
+            </div>
+            
+            <form class="addDishes">
+                <a href="" class="close" onclick="closeAddForm">X</a>
+                Dish name: <input type="text" name="item" placeholder="dish name" required></input>
+                Description: <textarea name="desc"></textarea>
+                Ingredients: <input type="text" name="ingredient" placeholder="ingredient name" required></input>
+                <button id="addIngredient">+</button>
+                <div class="ingredients" id="ingredientsToAdd"></div>
+                image url: <input type="text" name="src" placeholder="image url"></input>
+                
+                
+                <button id="newDish">ADD</button>
+            </form>
+            
+            <div id="shoppingListContainer">shopping list:<div id="shoppingList"></div>
+            </div>
+        </main>
+        </div>
+    
+    
+    <script>
+          
+    </script>    
+    <script src="app/js/script.js"></script>
+    </body>
+    
