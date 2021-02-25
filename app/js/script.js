@@ -84,24 +84,20 @@ var thingToDrag = "";
         function populateMenu() {
             const dishes = getDishes();         
             dishes.forEach(function(d) {
-                var dish = d.name
-                var ings = d.ingredients;
-                var image = d.image;
-                var desc = d.desc;
-                var food = document.createElement("div");
+                const dish = d.name
+                const ings = d.ingredients;
+                const food = document.createElement("div");
                 food.classList.add("menuitem");
                 food.innerHTML = ` 
-                        <img src=${image} alt=${dish} onmouseover=\"handleMouseOver(this)\">
                         <p class=\"dishTitle centered\" draggable=\"true\" ondragstart=\"drag(this)\">${dish}</p>
-                        <div class=\"description\">${desc}</div>
                         <div class=\"ingredientsList\" id=\"${dish}\"></div>
                         `;
                 $('#menu').append(food);
-                document.getElementById(dish).innerHTML = ings.join(", ");
+                //document.getElementById(dish).innerHTML = ings.join(", ");
                 });
-            var btn = "<button class=\"newDishBtn\" onclick=\"openAddDishForm()\">Create Dish</button>";
-            $('#menu').append(btn);
+            
             $('.menuitem').on('mouseleave', handleMouseLeave);
+
             localStorage.setItem("dishes", JSON.stringify(dishes));
         }
         
@@ -116,8 +112,9 @@ var thingToDrag = "";
         function handleWeekClick(e){
            
             const content = e.currentTarget.textContent;
+            console.log(content);
             var dishes = JSON.parse(localStorage.getItem("dishes"));
-            var x = search(e.currentTarget.textContent, dishes);
+            var x = search(content, dishes);
             var arr = x.ingredients;
             arr.forEach((e) => {
                 for( var i = 0; i < ingredientsToShop.length; i++)
@@ -182,6 +179,7 @@ var thingToDrag = "";
           };   
           var dishes = JSON.parse(localStorage.getItem("dishes"));
           dishes.push(objectToadd);
+          
           localStorage.setItem("dishes", JSON.stringify(dishes));
           $("#menu").html("");
           populateMenu();
