@@ -84,12 +84,17 @@ var thingToDrag = "";
         function populateMenu() {
             const dishes = getDishes();         
             dishes.forEach(function(d) {
-                const dish = d.name
-                const ings = d.ingredients;
+                const dish = d.name;
                 const food = document.createElement("div");
                 food.classList.add("menuitem");
+                
                 food.innerHTML = ` 
-                        <p class=\"dishTitle centered\" draggable=\"true\" ondragstart=\"drag(this)\">${dish}</p>
+                        <p class=\"dishTitle\" draggable=\"true\" ondragstart=\"drag(this)\">${dish}</p>
+                        <div class=\"dishControls\"> 
+                            <button onclick=\"editDish(this)\">✏️</button>
+                            <button onclick=\"deleteDish(this)\">x</button>
+                        </div>
+
                         <div class=\"ingredientsList\" id=\"${dish}\"></div>
                         `;
                 $('#menu').append(food);
@@ -112,7 +117,7 @@ var thingToDrag = "";
         function handleWeekClick(e){
            
             const content = e.currentTarget.textContent;
-            console.log(content);
+           
             var dishes = JSON.parse(localStorage.getItem("dishes"));
             var x = search(content, dishes);
             var arr = x.ingredients;
@@ -170,17 +175,14 @@ var thingToDrag = "";
 
         function addDish(e){
           e.preventDefault();
-          let image = (document.querySelector('[name=src]')).value || "https://picsum.photos/200/300?random=4";
           let objectToadd = {
               name: (document.querySelector('[name=item]')).value,
               ingredients:ingredientsToAdd,
-              desc: (document.querySelector('[name=desc]')).value,
-              image: image
-          };   
+                        };   
           var dishes = JSON.parse(localStorage.getItem("dishes"));
           dishes.push(objectToadd);
-          
           localStorage.setItem("dishes", JSON.stringify(dishes));
+          
           $("#menu").html("");
           populateMenu();
           $("#ingredientsToAdd").html("");
@@ -195,6 +197,30 @@ var thingToDrag = "";
 
         function closeAddForm(){
         $('.addDishes').removeClass("visible");
+        }
+
+        function editDish(event){
+            const dishName = event.parentElement.parentElement.lastElementChild.id;
+            var dishes = JSON.parse(localStorage.getItem("dishes"));
+           
+            const dish = dishes.filter(x => x.name == dishName);
+            var ings = dish[0].ingredients;
+            const form = document.querySelector('.addDishes');
+            form.item.value = dishName;
+            form.ingredient.value = ings.join(" ");
+            deleteDish(event);
+            openAddDishForm()
+
+        }
+
+        function deleteDish(event){
+            const dishName = event.parentElement.parentElement.childNodes[1].innerHTML;
+            var dishes = JSON.parse(localStorage.getItem("dishes"));
+            const newDishes = dishes.filter(x => x.name !== dishName);
+            localStorage.setItem("dishes", JSON.stringify(newDishes));
+            $("#menu").html("");
+            populateMenu();
+
         }
 
         populateMenu();

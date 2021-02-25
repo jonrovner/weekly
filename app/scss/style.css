@@ -22,12 +22,17 @@ body {
   margin: auto;
 }
 
+main {
+  max-width: 1024px;
+  margin: auto;
+  padding: 2rem;
+}
+
 .infotext {
   font-family: 'Open Sans', sans-serif;
   font-style: italic;
   font-weight: lighter;
   font-size: small;
-  margin-left: 2em;
 }
 
 .title {
@@ -63,8 +68,6 @@ body {
 }
 
 .menu {
-  margin-left: 2em;
-  margin-right: 2em;
   width: 50%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -84,9 +87,8 @@ body {
 }
 
 .menuitem {
-  max-width: 8rem;
-  min-height: 3rem;
-  position: relative;
+  max-width: 20%;
+  min-height: 2rem;
   display: -ms-grid;
   display: grid;
   place-content: center;
@@ -101,6 +103,11 @@ body {
 }
 
 .menuitem .dishTitle {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  -ms-grid-column-align: center;
+      justify-self: center;
   letter-spacing: 0.05em;
 }
 
@@ -120,13 +127,13 @@ body {
   overflow: hidden;
 }
 
-.centered {
-  position: absolute;
-  top: 18%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  z-index: 1;
+.dishControls {
+  -ms-grid-column-align: center;
+      justify-self: center;
+}
+
+.dishControls button {
+  border: none;
 }
 
 .selected {
