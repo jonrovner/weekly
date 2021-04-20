@@ -87,7 +87,6 @@ var thingToDrag = "";
                 const dish = d.name;
                 const food = document.createElement("div");
                 food.classList.add("menuitem");
-                
                 food.innerHTML = ` 
                         <p class=\"dishTitle\" draggable=\"true\" ondragstart=\"drag(this)\">${dish}</p>
                         <div class=\"dishControls\"> 
@@ -97,6 +96,7 @@ var thingToDrag = "";
 
                         <div class=\"ingredientsList\" id=\"${dish}\"></div>
                         `;
+
                 $('#menu').append(food);
                 //document.getElementById(dish).innerHTML = ings.join(", ");
                 });
@@ -179,14 +179,17 @@ var thingToDrag = "";
               name: (document.querySelector('[name=item]')).value,
               ingredients:ingredientsToAdd,
                         };   
+          
           var dishes = JSON.parse(localStorage.getItem("dishes"));
           dishes.push(objectToadd);
           localStorage.setItem("dishes", JSON.stringify(dishes));
           
           $("#menu").html("");
           populateMenu();
+          
           $("#ingredientsToAdd").html("");
           ingredientsToAdd = [];
+          
           $('.addDishes').removeClass("visible");
           $('.addDishes').reset();
         }
@@ -202,7 +205,6 @@ var thingToDrag = "";
         function editDish(event){
             const dishName = event.parentElement.parentElement.lastElementChild.id;
             var dishes = JSON.parse(localStorage.getItem("dishes"));
-           
             const dish = dishes.filter(x => x.name == dishName);
             var ings = dish[0].ingredients;
             const form = document.querySelector('.addDishes');
@@ -210,7 +212,6 @@ var thingToDrag = "";
             form.ingredient.value = ings.join(" ");
             deleteDish(event);
             openAddDishForm()
-
         }
 
         function deleteDish(event){
@@ -220,7 +221,6 @@ var thingToDrag = "";
             localStorage.setItem("dishes", JSON.stringify(newDishes));
             $("#menu").html("");
             populateMenu();
-
         }
 
         populateMenu();
