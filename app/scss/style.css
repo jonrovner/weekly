@@ -68,7 +68,6 @@ main {
 }
 
 .menu {
-  width: 50%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -114,6 +113,7 @@ main {
 .newDishBtn {
   margin: auto;
   margin-top: 2rem;
+  margin-left: 45%;
   max-width: 8rem;
   min-height: 3rem;
   position: relative;
