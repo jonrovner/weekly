@@ -110,6 +110,10 @@ main {
   letter-spacing: 0.05em;
 }
 
+.menuitem img {
+  height: 10rem;
+}
+
 .newDishBtn {
   margin: auto;
   margin-top: 2rem;

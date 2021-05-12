@@ -11,7 +11,7 @@ var thingToDrag = "";
                                     "coriander", 
                                     "pita bread", 
                                     "yoghurt sauce"],
-                        image: "img/falafel.jpg"            
+                        image: "img/pexels-ella-olsson-1640777.jpg"            
                         },
                         {name: "empanadas",
                         desc: "Baked turnover filled with tuna, onions, potatoes and olives",
@@ -21,7 +21,7 @@ var thingToDrag = "";
                                     "potatoes", 
                                     "onions",
                                     "olives"],
-                        image: "img/empanadas.jpg"
+                        image: "img/pexels-daria-shevtsova-704569.jpg"
 
                         },
                         {name:"cuban rice",
@@ -31,7 +31,7 @@ var thingToDrag = "";
                                       "bananas",
                                       "eggs",
                                       "sausages"],
-                        image: "img/cuban.jpg"
+                        image: "img/pexels-jane-d-1092730.jpg"
                         },
                         {name:"pasta",
                         desc: "no need for description here. Plain old italian pasata with tomato sause and cheese",
@@ -41,7 +41,7 @@ var thingToDrag = "";
                                       "garlic",
                                       "cheese"
                         ],
-                        image: "img/noodles.jpg"
+                        image: "img/pexels-ella-olsson-1640777.jpg"
                         },
                         {name:"milanesas",
                         desc:"breaded beef with potatoes",
@@ -52,24 +52,24 @@ var thingToDrag = "";
                             "garlic",
                             "potatoes"
                             ],
-                        image: "img/mila.jpg"
+                        image: "img/pexels-lumn-1410236.jpg"
                         },
                         {name:"hamburguesas",
                         desc:"clasic hamburguer",
                         ingredients:["pattys", "buns", "tomato", "onion", "bacon", "pckles"],
-                        image: "img/burguer.jpg"
+                        image: "img/pexels-jonathan-borba-2983101.jpg"
 
                         },
                         {name:"baked beef",
                         desc: "baked beef",
                         ingredients: ["beef", "onions", "potatoes", "sweet potatoes"],
-                        image: "img/carnehorno.jpg"
+                        image: "img/pexels-william-choquette-2641886.jpg"
 
                         },
                         {name: "baked chicken",
                         desc: "good old baked chicken with potatoes",
                         ingredients: ["chicken", "potatoes"],
-                        image: "img/parripollo.jpg"
+                        image: "img/pexels-julie-aagaard-2097090.jpg"
 
                         }
                         ];
@@ -88,6 +88,7 @@ var thingToDrag = "";
                 const food = document.createElement("div");
                 food.classList.add("menuitem");
                 food.innerHTML = ` 
+                        <img src="${d.image}" alt="" class="cardImage"/> 
                         <p class=\"dishTitle\" draggable=\"true\" ondragstart=\"drag(this)\">${dish}</p>
                         <div class=\"dishControls\"> 
                             <button onclick=\"editDish(this)\">✏️</button>
