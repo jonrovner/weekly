@@ -223,7 +223,50 @@ var thingToDrag = "";
             $("#menu").html("");
             populateMenu();
         }
-
+        async function showInfo(e){
+   
+            console.log(e.target)
+            
+            //const queryString = 'https://api.spoonacular.com/recipes/'+id+'/information?apiKey=45a509a08a1c4651bdbabf4f47f98725'
+            //const response = await fetch(queryString)
+            //const data = await response.json()
+            //document.querySelector('.info').innerHTML = data.summary
+            
+           
+          }
+          async function searchFood(word){
+            const queryString = 'https://api.spoonacular.com/recipes/complexSearch?query='+word+'&apiKey=45a509a08a1c4651bdbabf4f47f98725'
+            const response = await fetch(queryString)
+            const data = await response.json()
+            return data   
+          }
+          
+         async function displayMatches(){
+            document.querySelector('.recipes').innerHTML = ""
+            const recipes = await searchFood(this.value)
+            recipes.results.forEach( recipe => {
+              var element = document.createElement("div")
+              element.id = recipe.id      
+              const html =  `
+              <div class="overlay"></div>
+              <h3>${recipe.title}</h3>
+              <img src=${recipe.image} alt=${recipe.title} width="100" height="100">
+              <div class="info"></div>
+              </div>`
+              element.classList.add("recipe")
+              element.innerHTML = html
+              document.querySelector('.recipes').append(element)
+              element.addEventListener('click', showInfo)
+            })
+           
+            
+            console.log(recipes.results)    
+            const arr = Array.from(recipes.results)
+            console.log(arr)
+          }
+          
+          document.querySelector('.search').addEventListener('change', displayMatches)
+        //document.querySelector('.recipes').addEventListener('click', showInfo)
         populateMenu();
         $('#addIngredient').on('click', addIngredient);
         $('#newDish').on('click', addDish); 
