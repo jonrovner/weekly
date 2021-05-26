@@ -1,8 +1,8 @@
 var thingToDrag = "";
-        var ingredientsToAdd = [];
-        var ingredientsToShop = [];
+var ingredientsToAdd = [];
+var ingredientsToShop = [];
         
-        const defaultDishes = [
+const defaultDishes = [
                         {name: "Falafel",
                         desc: "Fryed balls of Soaked cheekpeas, grounded with persil, garlic and coriander, served in a pita bread, with fresh veggies (letuce, tomato, cabbage, cucumber) topped with mint yoghurt sauce",
                         ingredients: [
@@ -92,7 +92,7 @@ var thingToDrag = "";
                         <p class=\"dishTitle\" draggable=\"true\" ondragstart=\"drag(this)\">${dish}</p>
                         <div class=\"dishControls\"> 
                             <button onclick=\"editDish(this)\">✏️</button>
-                            <button onclick=\"deleteDish(this)\">x</button>
+                            <button onclick=\"deleteDish(event)\">x</button>
                         </div>
 
                         <div class=\"ingredientsList\" id=\"${dish}\"></div>
@@ -216,60 +216,69 @@ var thingToDrag = "";
         }
 
         function deleteDish(event){
-            const dishName = event.parentElement.parentElement.childNodes[1].innerHTML;
+            console.log(event.path[2].children[1].innerText)
+            const dishName = event.path[2].children[1].innerText;
             var dishes = JSON.parse(localStorage.getItem("dishes"));
             const newDishes = dishes.filter(x => x.name !== dishName);
             localStorage.setItem("dishes", JSON.stringify(newDishes));
             $("#menu").html("");
             populateMenu();
         }
-        async function showInfo(e){
+
+        function showInfo(e){
    
-            console.log(e.target)
+            e.path[1].children[3].classList.toggle("show")
             
-            //const queryString = 'https://api.spoonacular.com/recipes/'+id+'/information?apiKey=45a509a08a1c4651bdbabf4f47f98725'
-            //const response = await fetch(queryString)
-            //const data = await response.json()
-            //document.querySelector('.info').innerHTML = data.summary
-            
-           
-          }
-          async function searchFood(word){
-            const queryString = 'https://api.spoonacular.com/recipes/complexSearch?query='+word+'&apiKey=45a509a08a1c4651bdbabf4f47f98725'
+        }
+        function hideInfo(e){
+            e.path[1].children[3].classList.remove("show")
+
+        }
+
+        async function searchFood(word){
+            const queryString = 'https://api.spoonacular.com/recipes/complexSearch?query='+word+'&number=6&apiKey=45a509a08a1c4651bdbabf4f47f98725&addRecipeInformation=true'
             const response = await fetch(queryString)
             const data = await response.json()
             return data   
-          }
+        }
           
-         async function displayMatches(){
+        async function displayMatches(){
             document.querySelector('.recipes').innerHTML = ""
             const recipes = await searchFood(this.value)
             recipes.results.forEach( recipe => {
-              var element = document.createElement("div")
-              element.id = recipe.id      
-              const html =  `
-              <div class="overlay"></div>
-              <h3>${recipe.title}</h3>
-              <img src=${recipe.image} alt=${recipe.title} width="100" height="100">
-              <div class="info"></div>
-              </div>`
-              element.classList.add("recipe")
-              element.innerHTML = html
-              document.querySelector('.recipes').append(element)
-              element.addEventListener('click', showInfo)
-            })
-           
-            
-            console.log(recipes.results)    
-            const arr = Array.from(recipes.results)
-            console.log(arr)
-          }
+                console.log(recipe)
+                var element = document.createElement("div")
+                element.id = recipe.id      
+                const html =  `
+                    <div class="overlay" ></div>
+                    <h3>${recipe.title}</h3>
+                    <img src=${recipe.image} alt=${recipe.title} width="100" height="100">
+                    <div class="info">
+                        <h3>${recipe.title}</h3>
+                        <p>${recipe.summary}</p>
+                        <h5>Ingredients</h5>
+                        <p class="ingredients"></p>
+                        <h5>Instructions</h5>
+                        <p>${recipe.analyzedInstructions[0].steps[0].step}</p>    
+                    </div>`
+                 
+                element.classList.add("recipe")
+                element.innerHTML = html
+                const ingredients = recipe.analyzedInstructions[0].steps[0].ingredients
+                element.addEventListener('click', showInfo)
+                element.addEventListener('mouseleave', hideInfo)
+                document.querySelector('.recipes').append(element)
+                var text = ""
+                ingredients.forEach(i => {text += i.name+", "})
+                element.querySelector('.ingredients').innerText=text
+            })                  
+        }
           
-          document.querySelector('.search').addEventListener('change', displayMatches)
-        //document.querySelector('.recipes').addEventListener('click', showInfo)
-        populateMenu();
-        $('#addIngredient').on('click', addIngredient);
-        $('#newDish').on('click', addDish); 
-        $('.menuitem').on('mouseleave', handleMouseLeave);
-        $('.main').on('click', handleWeekClick);
+    document.querySelector('.search').addEventListener('change', displayMatches)
+    //document.querySelector('.recipes').addEventListener('click', showInfo)
+    populateMenu();
+    $('#addIngredient').on('click', addIngredient);
+    $('#newDish').on('click', addDish); 
+    $('.menuitem').on('mouseleave', handleMouseLeave);
+    $('.main').on('click', handleWeekClick);
     
