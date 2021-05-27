@@ -1,6 +1,7 @@
 var thingToDrag = "";
 var ingredientsToAdd = [];
 var ingredientsToShop = [];
+const monkey = '&apiKey=45a509a08a1c4651bdbabf4f47f98725'
         
 const defaultDishes = [
                         {name: "Falafel",
@@ -225,13 +226,63 @@ const defaultDishes = [
             populateMenu();
         }
 
-        function showInfo(e){
-   
-            e.path[1].children[3].classList.toggle("show")
-            
+        async function showBtn(e){
+            const id = e.parentElement.id
+            const queryString = 'https://api.spoonacular.com/recipes/'+id+'/information?'+monkey
+            const response = await fetch(queryString)
+            const data = await response.json()
+            console.log(data) 
+            const html = `
+            <h1>${data.title}</h1>
+            <img src=${data.image}>
+            <p class="summary">${data.summary}</p>
+            <h2>Ingredients</h2>
+            <p class="ingredients"></p>
+            <h2>Instructions</h2>
+            <p class="instructions">${data.instructions}</p>
+            <button onclick="addToMyList(this)">Add</button>
+            <button type="button" onclick="toggleShow(this)">close</button>
+
+            `
+            const infoElement = document.querySelector('.infoWindow')
+            infoElement.innerHTML = html
+            var text = ""
+            data.extendedIngredients.forEach(ingredient=>{text += ingredient.name+", "})
+            infoElement.querySelector('.ingredients').innerText = text
+            infoElement.classList.add("show")
+            document.querySelector('body').style.overflow = "hidden"
         }
-        function hideInfo(e){
-            e.path[1].children[3].classList.remove("show")
+        
+        function toggleShow(e){
+            e.parentElement.innerHTML = ""
+            e.parentElement.classList.remove("show")
+            document.querySelector('body').style.overflow = ""
+            document.querySelector('body').style.overflow = "visible"
+        }
+
+        async function getRandom(e){
+            e.preventDefault()
+            
+            document.querySelector('.recipes').innerHTML = ""
+            const queryString = 'https://api.spoonacular.com/recipes/random?number=6'+monkey
+            const response = await fetch(queryString)
+            const data = await response.json()
+            data.recipes.forEach(recipe=>{
+                var element = document.createElement("div")
+                element.id = recipe.id
+                const html =  `                                        
+                    <h3>${recipe.title}</h3>
+                    <img src=${recipe.image} alt=${recipe.title}>
+                    
+                    <button onclick="showBtn(this)">info</button>
+                    `                 
+                element.classList.add("recipe")
+                element.innerHTML = html
+                                
+                document.querySelector('.recipes').append(element)
+                                
+
+            })
 
         }
 
@@ -242,44 +293,33 @@ const defaultDishes = [
             return data   
         }
           
-        async function displayMatches(){
+        async function displayMatches(e){
+            e.preventDefault()
             document.querySelector('.recipes').innerHTML = ""
-            const recipes = await searchFood(this.value)
+            const recipes = await searchFood(e.target.value)
             recipes.results.forEach( recipe => {
-                console.log(recipe)
                 var element = document.createElement("div")
-                element.id = recipe.id      
-                const html =  `
-                    
+                element.id = recipe.id
+                const html =  `                                        
                     <h3>${recipe.title}</h3>
-                    <img src=${recipe.image} alt=${recipe.title} width="100" height="100">
-                    <button onclick="addToMyList">Add</button>
-                    <div class="info">
-                        <h3>${recipe.title}</h3>
-                        <p>${recipe.summary}</p>
-                        <h5>Ingredients</h5>
-                        <p class="ingredients"></p>
-                        <h5>Instructions</h5>
-                        <p>${recipe.analyzedInstructions[0].steps[0].step}</p>    
-                    </div>`
-                 
+                    <img src=${recipe.image} alt=${recipe.title}>
+                    
+                    <button onclick="showBtn(this)">info</button>
+                    `                 
                 element.classList.add("recipe")
                 element.innerHTML = html
-                const ingredients = recipe.analyzedInstructions[0].steps[0].ingredients
-                //element.addEventListener('click', showInfo)
-                
+                                
                 document.querySelector('.recipes').append(element)
-                var text = ""
-                ingredients.forEach(i => {text += i.name+", "})
-                element.querySelector('.ingredients').innerText=text
-            })                  
+            })    
+            this.reset()              
         }
         function addToMyList(e){
-            console.log(e)
+           
+            console.log(e.parentElement)
             const objectToadd = {
-                name: "dish.name",
-                ingredients: "dish.ingredients",
-                image: "dish.image"
+                name: e.parentElement.children[0].innerText,
+                ingredients: e.parentElement.children[4].innerText,
+                image: e.parentElement.children[1].getAttribute("src")
             }
             const dishes = getDishes()
             const newDishes = dishes.concat(objectToadd)
@@ -295,4 +335,6 @@ const defaultDishes = [
     $('#newDish').on('click', addDish); 
     $('.menuitem').on('mouseleave', handleMouseLeave);
     $('.main').on('click', handleWeekClick);
-    
+    $('.search').on('submit', displayMatches);
+    $('.getRandom').on('submit', getRandom)
+   

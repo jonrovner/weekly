@@ -9,13 +9,13 @@
         <link rel="stylesheet" href="app/scss/style.css">
     </head>
     
-    <body onload="">
+    <body>
        
-    <div id="wrapper"> 
+    <div id="wrapper">
+        <div class="infoWindow"></div>
         <header>
             <h1 class="title">WeekEat</h1>
         </header>
-        
         <main>   
             <div class="container week">
                 <div class="item" style="visibility: hidden;"></div>
@@ -49,8 +49,14 @@
             </div>      
             <h2>The food search</h2>
             <p>powered by Spoonacular Api</p>
-            <label for="foodsearch">type ingredient or dish name</label>
-            <input name="foodsearch" class="search" type="text">
+            <form class="search">
+                <label for="foodsearch">type ingredient or dish name</label>
+                <input name="foodsearch" class="search" type="text">
+                <button type="submit">search</button>
+            </form>
+            <form class="getRandom">
+            <button type="submit">or get random</button>
+            </form>
         
             <div class="recipes"></div>   
             

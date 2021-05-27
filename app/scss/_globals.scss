@@ -3,6 +3,7 @@ body{
     margin: 0px;
     padding: 0px;
     font-family: 'Amatic SC', cursive;
+    position: relative;
 }
 
 #wrapper{
@@ -206,14 +207,26 @@ main{
 
     &.show{
         position: absolute;
-        left:75%;
+        top:0;
+        left: 0;
+        width: 100%;
+        min-height: 100vh;
+        padding: 2rem;
+        background-color: white;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        
 
     }
     
     
 }
-
+.showBtn{
+    position: relative;
+    z-index: 4;
+}
+.addToMyList{
+    z-index: 5
+}
