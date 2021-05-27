@@ -250,9 +250,10 @@ const defaultDishes = [
                 var element = document.createElement("div")
                 element.id = recipe.id      
                 const html =  `
-                    <div class="overlay" ></div>
+                    
                     <h3>${recipe.title}</h3>
                     <img src=${recipe.image} alt=${recipe.title} width="100" height="100">
+                    <button onclick="addToMyList">Add</button>
                     <div class="info">
                         <h3>${recipe.title}</h3>
                         <p>${recipe.summary}</p>
@@ -265,13 +266,26 @@ const defaultDishes = [
                 element.classList.add("recipe")
                 element.innerHTML = html
                 const ingredients = recipe.analyzedInstructions[0].steps[0].ingredients
-                element.addEventListener('click', showInfo)
-                element.addEventListener('mouseleave', hideInfo)
+                //element.addEventListener('click', showInfo)
+                
                 document.querySelector('.recipes').append(element)
                 var text = ""
                 ingredients.forEach(i => {text += i.name+", "})
                 element.querySelector('.ingredients').innerText=text
             })                  
+        }
+        function addToMyList(e){
+            console.log(e)
+            const objectToadd = {
+                name: "dish.name",
+                ingredients: "dish.ingredients",
+                image: "dish.image"
+            }
+            const dishes = getDishes()
+            const newDishes = dishes.concat(objectToadd)
+            localStorage.setItem("dishes", JSON.stringify(newDishes));
+            populateMenu();
+
         }
           
     document.querySelector('.search').addEventListener('change', displayMatches)
