@@ -1,7 +1,13 @@
+html{
+    height: 100vh;
+}
+
 body{
     box-sizing: border-box;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
     font-family: 'Amatic SC', cursive;
     position: relative;
 }
@@ -195,6 +201,12 @@ main{
         width: 100%;
         height: 100%;
     }
+    button{
+        appearance: none;
+        margin: 1rem;
+        padding: 0.5rem;
+
+    }
     
 }
  
@@ -202,31 +214,47 @@ main{
 .search{
     margin-top: 1rem;
 }
-.info{
+.infoWindow{
     display: none;
 
     &.show{
-        position: absolute;
-        top:0;
-        left: 0;
-        width: 100%;
-        min-height: 100vh;
-        padding: 2rem;
+        padding: 5rem;
         background-color: white;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        
-
+        letter-spacing: 0.11rem;
+        width: 34rem;
+        margin:2rem auto; 
+        box-shadow: 10px 10px 10px 10px (gray);
+        button{
+            appearance: none;
+            margin: 1rem;
+            padding: 1rem;
+            box-shadow: 2px 2px 2px 2px (gray);
+        }
+        .summary{
+            width: 34rem;
+        } 
+        .ingredients{
+            width: 34rem;
+        }
+        .instructions{
+            
+        }
     }
     
     
 }
 .showBtn{
+    margin: 1rem;
+    padding: 1rem;
     position: relative;
-    z-index: 4;
+    
 }
 .addToMyList{
-    z-index: 5
+    margin: 1rem;
+    padding: 1rem;
+    
 }

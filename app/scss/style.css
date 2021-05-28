@@ -1,8 +1,14 @@
+html {
+  height: 100vh;
+}
+
 body {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
   font-family: 'Amatic SC', cursive;
   position: relative;
 }
@@ -242,21 +248,24 @@ main {
   height: 100%;
 }
 
+.recipe button {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  margin: 1rem;
+  padding: 0.5rem;
+}
+
 .search {
   margin-top: 1rem;
 }
 
-.info {
+.infoWindow {
   display: none;
 }
 
-.info.show {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  min-height: 100vh;
-  padding: 2rem;
+.infoWindow.show {
+  padding: 5rem;
   background-color: white;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -271,14 +280,39 @@ main {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  letter-spacing: 0.11rem;
+  width: 34rem;
+  margin: 2rem auto;
+  -webkit-box-shadow: 10px 10px 10px 10px gray;
+          box-shadow: 10px 10px 10px 10px gray;
+}
+
+.infoWindow.show button {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  margin: 1rem;
+  padding: 1rem;
+  -webkit-box-shadow: 2px 2px 2px 2px gray;
+          box-shadow: 2px 2px 2px 2px gray;
+}
+
+.infoWindow.show .summary {
+  width: 34rem;
+}
+
+.infoWindow.show .ingredients {
+  width: 34rem;
 }
 
 .showBtn {
+  margin: 1rem;
+  padding: 1rem;
   position: relative;
-  z-index: 4;
 }
 
 .addToMyList {
-  z-index: 5;
+  margin: 1rem;
+  padding: 1rem;
 }
 /*# sourceMappingURL=style.css.map */

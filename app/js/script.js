@@ -227,21 +227,22 @@ const defaultDishes = [
         }
 
         async function showBtn(e){
+            console.log(e)
             const id = e.parentElement.id
             const queryString = 'https://api.spoonacular.com/recipes/'+id+'/information?'+monkey
             const response = await fetch(queryString)
             const data = await response.json()
             console.log(data) 
             const html = `
-            <h1>${data.title}</h1>
-            <img src=${data.image}>
-            <p class="summary">${data.summary}</p>
-            <h2>Ingredients</h2>
-            <p class="ingredients"></p>
-            <h2>Instructions</h2>
-            <p class="instructions">${data.instructions}</p>
-            <button onclick="addToMyList(this)">Add</button>
-            <button type="button" onclick="toggleShow(this)">close</button>
+                <h1>${data.title}</h1>
+                <img src=${data.image}>
+                <p class="summary">${data.summary}</p>
+                <h2>Ingredients</h2>
+                <p class="ingredients"></p>
+                <h2>Instructions</h2>
+                <p class="instructions">${data.instructions}</p>
+                <button onclick="addToMyList(this)">Add</button>
+                <button type="button" onclick="toggleShow(this)">close</button>
 
             `
             const infoElement = document.querySelector('.infoWindow')
@@ -250,15 +251,13 @@ const defaultDishes = [
             data.extendedIngredients.forEach(ingredient=>{text += ingredient.name+", "})
             infoElement.querySelector('.ingredients').innerText = text
             infoElement.classList.add("show")
-            document.querySelector('body').style.overflow = "hidden"
+            window.scrollTo(0,0)
+            
         }
         
         function toggleShow(e){
-            e.parentElement.innerHTML = ""
-            e.parentElement.classList.remove("show")
-            document.querySelector('body').style.overflow = ""
-            document.querySelector('body').style.overflow = "visible"
-        }
+            document.querySelector('.infoWindow').classList.remove("show")
+            }
 
         async function getRandom(e){
             e.preventDefault()
