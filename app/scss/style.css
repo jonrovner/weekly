@@ -297,14 +297,6 @@ main {
           box-shadow: 2px 2px 2px 2px gray;
 }
 
-.infoWindow.show .summary {
-  width: 34rem;
-}
-
-.infoWindow.show .ingredients {
-  width: 34rem;
-}
-
 .showBtn {
   margin: 1rem;
   padding: 1rem;

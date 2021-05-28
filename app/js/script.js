@@ -227,12 +227,12 @@ const defaultDishes = [
         }
 
         async function showBtn(e){
-            console.log(e)
+            
             const id = e.parentElement.id
             const queryString = 'https://api.spoonacular.com/recipes/'+id+'/information?'+monkey
             const response = await fetch(queryString)
             const data = await response.json()
-            console.log(data) 
+             
             const html = `
                 <h1>${data.title}</h1>
                 <img src=${data.image}>
@@ -251,6 +251,7 @@ const defaultDishes = [
             data.extendedIngredients.forEach(ingredient=>{text += ingredient.name+", "})
             infoElement.querySelector('.ingredients').innerText = text
             infoElement.classList.add("show")
+            infoElement.id = id
             window.scrollTo(0,0)
             
         }
@@ -318,7 +319,8 @@ const defaultDishes = [
             const objectToadd = {
                 name: e.parentElement.children[0].innerText,
                 ingredients: e.parentElement.children[4].innerText,
-                image: e.parentElement.children[1].getAttribute("src")
+                image: e.parentElement.children[1].getAttribute("src"),
+                id: e.parentElement.id
             }
             const dishes = getDishes()
             const newDishes = dishes.concat(objectToadd)
