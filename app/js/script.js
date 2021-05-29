@@ -2,78 +2,7 @@ var thingToDrag = "";
 var ingredientsToAdd = [];
 var ingredientsToShop = [];
 const monkey = '&apiKey=45a509a08a1c4651bdbabf4f47f98725'
-        
-const defaultDishes = [
-                        {name: "Falafel",
-                        desc: "Fryed balls of Soaked cheekpeas, grounded with persil, garlic and coriander, served in a pita bread, with fresh veggies (letuce, tomato, cabbage, cucumber) topped with mint yoghurt sauce",
-                        ingredients: [
-                                    "cheekpeas", 
-                                    "persil", 
-                                    "coriander", 
-                                    "pita bread", 
-                                    "yoghurt sauce"],
-                        image: "img/pexels-ella-olsson-1640777.jpg"            
-                        },
-                        {name: "empanadas",
-                        desc: "Baked turnover filled with tuna, onions, potatoes and olives",
-                        ingredients: [
-                                    "dough", 
-                                    "tuna", 
-                                    "potatoes", 
-                                    "onions",
-                                    "olives"],
-                        image: "img/pexels-daria-shevtsova-704569.jpg"
-
-                        },
-                        {name:"cuban rice",
-                        desc:"White rice with fried bananas, egg and susage",
-                        ingredients: [
-                                      "rice",
-                                      "bananas",
-                                      "eggs",
-                                      "sausages"],
-                        image: "img/pexels-jane-d-1092730.jpg"
-                        },
-                        {name:"pasta",
-                        desc: "no need for description here. Plain old italian pasata with tomato sause and cheese",
-                        ingredients: [
-                                      "noodles",
-                                      "tomatoes",
-                                      "garlic",
-                                      "cheese"
-                        ],
-                        image: "img/pexels-ella-olsson-1640777.jpg"
-                        },
-                        {name:"milanesas",
-                        desc:"breaded beef with potatoes",
-                        ingredients: [
-                            "beef",
-                            "bread",
-                            "eggs",
-                            "garlic",
-                            "potatoes"
-                            ],
-                        image: "img/pexels-lumn-1410236.jpg"
-                        },
-                        {name:"hamburguesas",
-                        desc:"clasic hamburguer",
-                        ingredients:["pattys", "buns", "tomato", "onion", "bacon", "pckles"],
-                        image: "img/pexels-jonathan-borba-2983101.jpg"
-
-                        },
-                        {name:"baked beef",
-                        desc: "baked beef",
-                        ingredients: ["beef", "onions", "potatoes", "sweet potatoes"],
-                        image: "img/pexels-william-choquette-2641886.jpg"
-
-                        },
-                        {name: "baked chicken",
-                        desc: "good old baked chicken with potatoes",
-                        ingredients: ["chicken", "potatoes"],
-                        image: "img/pexels-julie-aagaard-2097090.jpg"
-
-                        }
-                        ];
+       
                         
         function getDishes(){
             if (localStorage.getItem("dishes")===null){
@@ -85,37 +14,27 @@ const defaultDishes = [
         function populateMenu() {
             const dishes = getDishes();         
             dishes.forEach(function(d) {
-                const dish = d.name;
-                const food = document.createElement("div");
-                food.classList.add("menuitem");
-                food.innerHTML = ` 
+                const dish = d.title;
+                const element = document.createElement("div");
+                element.classList.add("menuitem");
+                element.id = d.id
+                element.innerHTML = ` 
                         <img src="${d.image}" alt="" class="cardImage"/> 
                         <p class=\"dishTitle\" draggable=\"true\" ondragstart=\"drag(this)\">${dish}</p>
                         <div class=\"dishControls\"> 
-                            <button onclick=\"editDish(this)\">✏️</button>
+                            <button onclick=\"showBtn(this.parentElement.parentElement.id)\">i</button>
                             <button onclick=\"deleteDish(event)\">x</button>
-                        </div>
-
-                        <div class=\"ingredientsList\" id=\"${dish}\"></div>
-                        `;
-
-                $('#menu').append(food);
-                //document.getElementById(dish).innerHTML = ings.join(", ");
+                        </div>`;
+                $('#menu').append(element);
+                
                 });
             
-            $('.menuitem').on('mouseleave', handleMouseLeave);
+            
 
             localStorage.setItem("dishes", JSON.stringify(dishes));
         }
         
-        function handleMouseOver(e){
-            e.parentElement.classList.add("overed");    
-        }
         
-        function handleMouseLeave(e){
-            e.currentTarget.classList.remove("overed");
-        }
-
         function handleWeekClick(e){
            
             const content = e.currentTarget.textContent;
@@ -226,13 +145,14 @@ const defaultDishes = [
             populateMenu();
         }
 
-        async function showBtn(e){
-            
-            const id = e.parentElement.id
+        async function showBtn(id){
+            console.log(id)
+            //const id = e.parentElement.id
             const queryString = 'https://api.spoonacular.com/recipes/'+id+'/information?'+monkey
             const response = await fetch(queryString)
             const data = await response.json()
-             
+            console.log(data)
+            localStorage.setItem("temporaryRecipe", JSON.stringify(data)) 
             const html = `
                 <h1>${data.title}</h1>
                 <img src=${data.image}>
@@ -260,21 +180,39 @@ const defaultDishes = [
             document.querySelector('.infoWindow').classList.remove("show")
             }
 
-        async function getRandom(e){
-            e.preventDefault()
+        async function getRandom(event){
+            event.preventDefault()
             
-            document.querySelector('.recipes').innerHTML = ""
-            const queryString = 'https://api.spoonacular.com/recipes/random?number=6'+monkey
-            const response = await fetch(queryString)
-            const data = await response.json()
-            data.recipes.forEach(recipe=>{
+            const filters = [...event.target]
+                        
+            if(Array.from(filters[3].value).length<2){
+                var tagString = ""
+                filters.forEach(filter => filter.value !== "" ? tagString += filter.value+"," : "")
+                
+                document.querySelector('.recipes').innerHTML = ""
+                
+                const queryString = `https://api.spoonacular.com/recipes/random?number=6&tags=${tagString+monkey}`
+                const response = await fetch(queryString)
+                const data = await response.json()
+                
+                showRecipes(data.recipes)
+            }else{
+            displayMatches(filters[3].value, filters)
+            }
+
+        }
+
+        function showRecipes(arr){
+            console.log(arr)
+            arr.forEach(recipe=>{
+                console.log(recipe)
                 var element = document.createElement("div")
                 element.id = recipe.id
                 const html =  `                                        
                     <h3>${recipe.title}</h3>
                     <img src=${recipe.image} alt=${recipe.title}>
                     
-                    <button onclick="showBtn(this)">info</button>
+                    <button onclick="showBtn(this.parentElement.id)">info</button>
                     `                 
                 element.classList.add("recipe")
                 element.innerHTML = html
@@ -284,58 +222,38 @@ const defaultDishes = [
 
             })
 
+
         }
 
-        async function searchFood(word){
-            const queryString = 'https://api.spoonacular.com/recipes/complexSearch?query='+word+'&number=6&apiKey=45a509a08a1c4651bdbabf4f47f98725&addRecipeInformation=true'
+        async function searchFood(word, optionsString){
+            const queryString = 'https://api.spoonacular.com/recipes/complexSearch?query='+word+optionsString+'&number=6&apiKey=45a509a08a1c4651bdbabf4f47f98725&addRecipeInformation=true'
             const response = await fetch(queryString)
             const data = await response.json()
             return data   
         }
           
-        async function displayMatches(e){
-            e.preventDefault()
+        async function displayMatches(word, filterArray){
+            const optionsString = "&diet="+filterArray[0].value+"&cuisine="+filterArray[1].value+"&type="+filterArray[2].value
+             console.log("optionsString: ", optionsString)                          
             document.querySelector('.recipes').innerHTML = ""
-            const recipes = await searchFood(e.target.value)
-            recipes.results.forEach( recipe => {
-                var element = document.createElement("div")
-                element.id = recipe.id
-                const html =  `                                        
-                    <h3>${recipe.title}</h3>
-                    <img src=${recipe.image} alt=${recipe.title}>
-                    
-                    <button onclick="showBtn(this)">info</button>
-                    `                 
-                element.classList.add("recipe")
-                element.innerHTML = html
-                                
-                document.querySelector('.recipes').append(element)
-            })    
-            this.reset()              
+            const recipes = await searchFood(word, optionsString)
+            await showRecipes(recipes.results)                         
         }
+
         function addToMyList(e){
            
             console.log(e.parentElement)
-            const objectToadd = {
-                name: e.parentElement.children[0].innerText,
-                ingredients: e.parentElement.children[4].innerText,
-                image: e.parentElement.children[1].getAttribute("src"),
-                id: e.parentElement.id
-            }
             const dishes = getDishes()
-            const newDishes = dishes.concat(objectToadd)
+            const newDishes = dishes.concat(JSON.parse(localStorage.getItem("temporaryRecipe")))
             localStorage.setItem("dishes", JSON.stringify(newDishes));
             populateMenu();
 
         }
           
-    document.querySelector('.search').addEventListener('change', displayMatches)
-    //document.querySelector('.recipes').addEventListener('click', showInfo)
+    
     populateMenu();
-    $('#addIngredient').on('click', addIngredient);
-    $('#newDish').on('click', addDish); 
-    $('.menuitem').on('mouseleave', handleMouseLeave);
+     
     $('.main').on('click', handleWeekClick);
-    $('.search').on('submit', displayMatches);
+    //$('.search').on('submit', displayMatches);
     $('.getRandom').on('submit', getRandom)
    
