@@ -1,0 +1,119 @@
+<html>
+    <head>
+        <title>what we eat</title>    
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Open+Sans:wght@200&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+        
+        <link rel="stylesheet" href="app/scss/style.css">
+    </head>
+    
+    <body>
+        
+        <div id="wrapper">
+            <div class="infoWindow"></div>
+            <header>
+                <h1 class="title">WeekEat</h1>
+                <p>powered by Spoonacular Food Api</p>
+                
+                <input type="text" id="apiKey" placeholder="insert Api Key">
+            
+            </header>
+            <main>   
+                <div class="week hide-for-mobile">
+                    <div class="item" style="visibility: hidden;"></div>
+                    <div class="item">Monday</div>
+                    <div class="item">Tuesday</div>
+                    <div class="item">Wednesday</div>
+                    <div class="item">Thursday</div>
+                    <div class="item">Friday</div>
+                    <div class="item">Saturday</div>
+                    <div class="item">Sunday</div>
+                    <div class="item">Lunch</div>
+                    <div class="item main" id="main1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div class="item main" id="main2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div class="item main" id="main3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div class="item main" id="main4" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div class="item main" id="main5" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div class="item main" id="main6" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div class="item main" id="main7" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div class="item">Dinner</div>
+                    <div class="item main" id="main8" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div class="item main" id="main9" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div class="item main" id="main10" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div class="item main" id="main11" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div class="item main" id="main12" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div class="item main" id="main13" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div class="item main" id="main14" ondrop="drop(event)" ondragover="allowDrop(event)"></div>    
+                </div>
+
+                <p class="infotext hide-for-mobile">Drag dishes into calendar. Click on added dishes to delete</p>
+
+                <div class="switchView">
+                    
+                    <div class = "select-slider-container">
+                        <div class= "option selected" id = "myList">My List</div>
+                        <div class = "option" id = "search">Search</div>
+                    </div>
+
+                </div>
+            
+                <div class="menu" id="menu"></div>
+                
+                <div class="searchForm">
+                    <h2>The what search</h2>
+                                  
+                        <select name="diet" id="diet">
+                            <option value="">diet</option>
+                            <option value="vegan">Vegan</option>
+                            <option value="pescatarian">Pescetarian</option>
+                            <option value="paleo">Paleo</option>
+                            <option value="vegetarian">Vegetarian</option>
+                        </select>
+                        
+                        <select name="cuisine" id="cuisine">
+                            <option value="">cuisine</option>
+                            <option value="italian">Italian</option>
+                            <option value="mediterranean">Meditarranean</option>
+                            <option value="french">French</option>
+                            <option value="american">American</option>
+                            <option value="spanish">Spanish</option>
+                            <option value="chinese">Chinese</option>
+                            <option value="thai">Thai</option>
+                            <option value="nordic">Nordic</option>
+                            <option value="mexican">Mexican</option>
+                            <option value="japanese">Japanese</option>
+                        </select>
+                        
+                        <select name="type" id="type">
+                            <option value="">Meal type</option>
+                            <option value="main course">Main course</option>
+                            <option value="side dish">Side dish</option>
+                            <option value="soup">Soup</option>
+                            <option value="salad">Salad</option>
+                            <option value="dessert">Dessert</option>
+                            <option value="breakfast">Breakfast</option>
+                            <option value="snack">Snack</option>
+                        </select>
+                        <br>
+                        <label for="foodsearch">type ingredient or dish (leave blank for random)</label>
+                        <input name="foodsearch" class="search" type="text">
+                        <br>   
+                        <button type="submit">Get Recipes</button>
+                    </form>
+                </div>
+                <div class="recipes"></div>   
+            
+
+                
+            
+                (c) Jonathan Rovner
+            </main>
+        </div>
+       
+     
+    <script src="app/js/script.js"></script>
+    </body>
+    
