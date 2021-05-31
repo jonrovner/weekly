@@ -1,7 +1,7 @@
 var thingToDrag = "";
 var ingredientsToAdd = [];
 var ingredientsToShop = [];
-var userCredential = "";
+
      
 function getDishes(){
     if (localStorage.getItem("dishes")===null){
@@ -150,18 +150,9 @@ function deleteDish(event){
 
 async function showDetails(id){
                 
-    const dishes = JSON.parse(localStorage.getItem("dishes"))
-    const queryString = '/api/'+id
-    let data
-    if(dishes!==null && dishes.find(dish=>dish.id==id) !== undefined){
-            data = dishes.find(dish=>dish.id==id)
-            
-    }
-    else{
-        const response = await fetch(queryString)
-        data = await response.json()
-        
-    }
+    const dishes = JSON.parse(localStorage.getItem("temporaryRecipes"))
+    console.log(dishes)
+    let data = dishes.find(dish=>dish.id==id)
     
     localStorage.setItem("temporaryRecipe", JSON.stringify(data)) 
     
@@ -209,7 +200,8 @@ async function getRandom(event){
         const response = await fetch(queryString)
         
         const data = await response.json()
-        console.log(data)
+        
+        localStorage.setItem("temporaryRecipes", JSON.stringify(data))
         showRecipes(data.recipes)
     }else{
     displayMatches(filters[3].value, filters)
