@@ -13,7 +13,7 @@ function getDishes(){
 function populateMenu() {
     const dishes = getDishes();         
     if(dishes!=="get your api key and search for dishes"){  
-    dishes.forEach(function(d) {
+    dishes.forEach(d => {
         const dish = d.title;
         const element = document.createElement("div");
         element.classList.add("menuitem");
@@ -203,7 +203,7 @@ async function getRandom(event){
         
         document.querySelector('.recipes').innerHTML = ""
         
-        const queryString = `/api/random?number=6&tags=${tagString}`
+        const queryString = `/api/random?number=12&tags=${tagString}`
         const response = await fetch(queryString)
         
         const data = await response.json()
@@ -262,33 +262,30 @@ function addToMyList(e){
     populateMenu();
 
 }
-
-function handleView(e){
-    
-    if(e.target.value == "search"){
-        document.querySelector('.menu').classList.add("hide-for-mobile")
+function handleView(event){
+    console.log(event.target)
+    const options = Array.from(document.querySelectorAll('.option'))
+    options.forEach(e => e.classList.toggle('selected'))
+    if(event.target.id == "myList"){
+        document.querySelector('.menu').classList.remove("hide")
     }
     else{
-        document.querySelector('.menu').classList.remove("hide-for-mobile")
+        document.querySelector('.menu').classList.add("hide")
     }
 }
+
 
 populateMenu();
 
 document.querySelector('.main').addEventListener('click', handleWeekClick)
 document.querySelector('.searchForm').addEventListener('submit', getRandom)
-//document.querySelector('#viewSelector').addEventListener('change', handleView)
-document.querySelector('.option').addEventListener('click', function(){
-document.querySelector('.option').classList.toggle('selected') 
-})
+//document.querySelector('.viewSelector').addEventListener('click', handleView)
+const options = Array.from(document.querySelectorAll('.option'))
+options.forEach(e => e.addEventListener('click', handleView))
+console.log(options)
 
-document.querySelector('#myList').addEventListener('click', function(){
-document.querySelector('#viewSelector').value = "myList"
-document.querySelector('.menu').classList.remove("hide")
-})
 
-document.querySelector('#search').addEventListener('click',function(){
-document.querySelector('#viewSelector').value = 'search'
-})
 
-document.querySelector('.menu').classList.add("hide")
+
+
+

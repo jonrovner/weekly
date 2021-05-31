@@ -16,9 +16,8 @@
             <div class="infoWindow"></div>
             <header>
                 <h1 class="title">WeekEat</h1>
-                <p>powered by Spoonacular Food Api</p>
-                
-                <input type="text" id="apiKey" placeholder="insert Api Key">
+              
+                             
             
             </header>
             <main>   
@@ -53,7 +52,7 @@
 
                 <div class="switchView">
                     
-                    <div class = "select-slider-container">
+                    <div class = "viewSelector" >
                         <div class= "option selected" id = "myList">My List</div>
                         <div class = "option" id = "search">Search</div>
                     </div>
@@ -63,7 +62,7 @@
                 <div class="menu" id="menu"></div>
                 
                 <form class="searchForm">
-                    <h2>The what search</h2>
+                    <h2>Recipe search</h2>
                                   
                         <select name="diet" id="diet">
                             <option value="">diet</option>
@@ -89,7 +88,7 @@
                         
                         <select name="type" id="type">
                             <option value="">Meal type</option>
-                            <option value="main course">Main course</option>
+                            <option value="main">Main course</option>
                             <option value="side dish">Side dish</option>
                             <option value="soup">Soup</option>
                             <option value="salad">Salad</option>
@@ -106,10 +105,11 @@
                 
                 <div class="recipes"></div>   
             
-
-                
+               <div class="credits">     
+                <p>powered by Spoonacular Food Api</p>
             
-                (c) Jonathan Rovner
+                <p>(c) Jonathan Rovner</p>
+            </div>
             </main>
         </div>
        

@@ -52,8 +52,8 @@ header {
 }
 
 main {
-  max-width: 1024px;
-  padding: 2rem;
+  max-width: 600px;
+  margin: auto;
 }
 
 .infotext {
@@ -66,7 +66,7 @@ main {
 .title {
   display: -ms-grid;
   display: grid;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   justify-items: center;
 }
 
@@ -155,17 +155,18 @@ main {
 }
 
 .menuitem .dishTitle {
-  -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
-      align-self: center;
-  -ms-grid-column-align: center;
-      justify-self: center;
+  margin-bottom: 0.5rem;
+  margin-top: 0.75rem;
   letter-spacing: 0.05em;
 }
 
 .menuitem img {
   max-width: 65rem;
   height: 70%;
+}
+
+.menuitem button {
+  padding: 0.5rem;
 }
 
 .ingredientsList {
@@ -227,6 +228,11 @@ main {
   font-size: smaller;
 }
 
+.recipes {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
 .recipe {
   position: relative;
   display: -webkit-box;
@@ -236,6 +242,7 @@ main {
       -ms-flex-align: center;
           align-items: center;
   margin-bottom: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .recipe h3 {
@@ -263,6 +270,12 @@ main {
           appearance: none;
   border-radius: 1.5rem;
   margin-left: auto;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.searchForm {
+  margin-bottom: 2rem;
 }
 
 .search {
@@ -373,6 +386,20 @@ main {
   color: white;
   z-index: 3;
   position: relative;
+}
+
+.credits {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  justify-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .searchForm {

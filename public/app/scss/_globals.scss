@@ -37,9 +37,9 @@ header{
 }
 
 main{
-    max-width: 1024px;
+    max-width: 600px;
+    margin:auto;
     
-    padding: 2rem;
 }
 
 .infotext {
@@ -52,7 +52,7 @@ main{
 
 .title{
     display: grid;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     justify-items: center;
 }
 
@@ -118,8 +118,8 @@ main{
     }
 
     .dishTitle{
-        align-self: center;
-        justify-self: center;
+        margin-bottom: 0.5rem;
+        margin-top: 0.75rem;
         letter-spacing: 0.05em;
     }
     img{
@@ -127,6 +127,9 @@ main{
         height: 70%;
         
         
+    }
+    button{
+        padding: 0.5rem
     }
 }
 
@@ -182,7 +185,10 @@ main{
     font-style: italic;
     font-size: smaller;
 }
-
+.recipes{
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
 
 .recipe{
     position: relative;
@@ -190,6 +196,7 @@ main{
     align-items: center;
     //justify-content: space-between;
     margin-bottom: 0.5rem;
+    padding-right: 0.5rem;
     h3{
         margin-top: 2%;
         margin-left: 0.5rem;
@@ -211,12 +218,16 @@ main{
         appearance: none;
         border-radius: 1.5rem;
         margin-left: auto;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
         
     }
     
 }
  
-
+.searchForm {
+    margin-bottom: 2rem;
+}
 .search{
     margin-top: 1rem;
 }
@@ -311,6 +322,12 @@ main{
  position:relative;
 }
 
+.credits{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
 .searchForm{
     display: flex;
     flex-direction: column;

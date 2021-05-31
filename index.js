@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const path = require('path')
@@ -13,7 +14,8 @@ app.get('/', (req, res) => {
 app.get('/api/random', async (req, res) => {
 
 try {
-    const queryString = `https://api.spoonacular.com/recipes/random?number=${req.query.number}&tags=${req.query.tags}&apiKey=45a509a08a1c4651bdbabf4f47f98725`
+    const queryString = `https://api.spoonacular.com/recipes/random?number=${req.query.number}&tags=${req.query.tags}&apiKey=${process.env.APIKEY}`
+    console.log(queryString)
     const data = await fetch(queryString)
     const results = await data.json() 
     res.json(results)
@@ -27,7 +29,8 @@ try {
 
 app.get('/api/search', async (req, res) => {
     try {
-        const queryString = `https://api.spoonacular.com/recipes/complexSearch?query=${req.query.word}&number=6&addRecipeInformation=true&diet=${req.query.diet}&cuisine=${req.query.cuisine}&type=${req.query.type}&apiKey=45a509a08a1c4651bdbabf4f47f98725`
+        const queryString = `https://api.spoonacular.com/recipes/complexSearch?query=${req.query.word}&number=12&addRecipeInformation=true&diet=${req.query.diet}&cuisine=${req.query.cuisine}&type=${req.query.type}&apiKey=${process.env.APIKEY}`
+        console.log(queryString)
         const data = await fetch(queryString)
         const results = await data.json()
         res.json(results)
@@ -35,15 +38,13 @@ app.get('/api/search', async (req, res) => {
         return res.status(500).json({
         success: false,
         message: err.message,
-    })
-        
+        })
     }
-
 })
 
 app.get('/api/:id', async (req, res) => {
     try {
-        const queryString = `https://api.spoonacular.com/recipes/${req.params.id}/information?&apiKey=45a509a08a1c4651bdbabf4f47f98725`
+        const queryString = `https://api.spoonacular.com/recipes/${req.params.id}/information?&apiKey=${process.env.APIKEY}`
         const data = await fetch(queryString)
         const results = await data.json()
         res.json(results)
