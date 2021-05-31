@@ -5,17 +5,19 @@ var ingredientsToShop = [];
      
 async function getDishes(){
     if (localStorage.getItem("dishes")===null){
-        return "Add some dishes to your list"
+        const data = await getRandom(2, "main")
+        return data.recipes
     }      
     else {
-        return await getRandom(1, "main")
+        return localStorage.getItem("dishes")
+        
     };
 }
 
-function populateMenu() {
-    const dishes = getDishes();         
+async function populateMenu() {
+    const dishes = await getDishes();         
     console.log(dishes)
-    if(typeof(dishes)!=="string"){  
+   
         dishes.forEach(d => {
             const dish = d.title;
             const element = document.createElement("div");
@@ -31,11 +33,7 @@ function populateMenu() {
             document.querySelector('#menu').appendChild(element);  
         });
         localStorage.setItem("dishes", JSON.stringify(dishes));
-    }else{
-        const el = document.createElement('div')
-        el.innerText = dishes
-        document.querySelector('.menu').appendChild(el)
-    }
+    
 
 }
 
