@@ -5,34 +5,36 @@ var userCredential = "";
      
 function getDishes(){
     if (localStorage.getItem("dishes")===null){
-    return "get your api key and search for dishes"
+        return "Add some dishes to your list"
     }      
-    return JSON.parse(localStorage.getItem("dishes"));
+    else {
+        return (localStorage.getItem("dishes"))
+    };
 }
 
 function populateMenu() {
     const dishes = getDishes();         
-    if(dishes!=="get your api key and search for dishes"){  
-    dishes.forEach(d => {
-        const dish = d.title;
-        const element = document.createElement("div");
-        element.classList.add("menuitem");
-        element.id = d.id
-        element.innerHTML = ` 
-                <img src="${d.image}" alt="" class="cardImage"/> 
-                <p class=\"dishTitle\" draggable=\"true\" ondragstart=\"drag(this)\">${dish}</p>
-                <div class=\"dishControls\"> 
-                    <button onclick=\"showDetails(this.parentElement.parentElement.id)\">i</button>
-                    <button onclick=\"deleteDish(event)\">x</button>
-                </div>`;
-        document.querySelector('#menu').appendChild(element);
-        
+    console.log(dishes)
+    if(typeof(dishes)!=="string"){  
+        dishes.forEach(d => {
+            const dish = d.title;
+            const element = document.createElement("div");
+            element.classList.add("menuitem");
+            element.id = d.id
+            element.innerHTML = ` 
+                    <img src="${d.image}" alt="" class="cardImage"/> 
+                    <p class=\"dishTitle\" draggable=\"true\" ondragstart=\"drag(this)\">${dish}</p>
+                    <div class=\"dishControls\"> 
+                        <button onclick=\"showDetails(this.parentElement.parentElement.id)\">i</button>
+                        <button onclick=\"deleteDish(event)\">x</button>
+                    </div>`;
+            document.querySelector('#menu').appendChild(element);  
         });
-        
-
-    localStorage.setItem("dishes", JSON.stringify(dishes));
+        localStorage.setItem("dishes", JSON.stringify(dishes));
     }else{
-        return 1
+        const el = document.createElement('div')
+        el.innerText = dishes
+        document.querySelector('.menu').appendChild(el)
     }
 
 }
