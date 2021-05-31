@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const path = require('path')
+const fetch = require('node-fetch')
 
 app.use(express.static('public'))
 
@@ -10,8 +11,49 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api/random', async (req, res) => {
- 
- res.send(req.query.number)  
+
+try {
+    const queryString = `https://api.spoonacular.com/recipes/random?number=${req.query.number}&tags=${req.query.tags}&apiKey=45a509a08a1c4651bdbabf4f47f98725`
+    const data = await fetch(queryString)
+    const results = await data.json() 
+    res.json(results)
+    } catch (err) {
+    return res.status(500).json({
+        success: false,
+        message: err.message,
+    })
+    }
+})
+
+app.get('/api/search', async (req, res) => {
+    try {
+        const queryString = `https://api.spoonacular.com/recipes/complexSearch?query=${req.query.word}&number=6&addRecipeInformation=true&diet=${req.query.diet}&cuisine=${req.query.cuisine}&type=${req.query.type}&apiKey=45a509a08a1c4651bdbabf4f47f98725`
+        const data = await fetch(queryString)
+        const results = await data.json()
+        res.json(results)
+    } catch (err) {
+        return res.status(500).json({
+        success: false,
+        message: err.message,
+    })
+        
+    }
+
+})
+
+app.get('/api/:id', async (req, res) => {
+    try {
+        const queryString = `https://api.spoonacular.com/recipes/${req.params.id}/information?&apiKey=45a509a08a1c4651bdbabf4f47f98725`
+        const data = await fetch(queryString)
+        const results = await data.json()
+        res.json(results)
+    } catch (err) {
+        return res.status(500).json({
+        success: false,
+        message: err.message,
+        
+    })
+    }
 })
 
 app.listen(process.env.PORT || 3001)
