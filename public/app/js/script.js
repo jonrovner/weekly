@@ -152,7 +152,7 @@ async function showDetails(id){
                 
     const dishes = JSON.parse(localStorage.getItem("temporaryRecipes"))
     console.log(dishes)
-    let data = dishes.find(dish=>dish.id==id)
+    let data = dishes.recipes.find(dish=>dish.id==id)
     
     localStorage.setItem("temporaryRecipe", JSON.stringify(data)) 
     
