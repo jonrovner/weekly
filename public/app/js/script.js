@@ -184,39 +184,40 @@ function toggleShow(e){
     document.querySelector('.infoWindow').classList.remove("show")
     }
 
-async function getRandom(event){
-    
+async function getRecipes(event){
     event.preventDefault()
-    
     const filters = [...event.target]
-                
     if(Array.from(filters[3].value).length<2){
         var tagString = ""
         filters.forEach(filter => filter.value !== "" ? tagString += filter.value+"," : "")
-        
-        document.querySelector('.recipes').innerHTML = ""
-        
-        const queryString = `/api/random?number=12&tags=${tagString}`
-        const response = await fetch(queryString)
-        
-        const data = await response.json()
-        
+        const data = getRandom(12, tagString)
         localStorage.setItem("temporaryRecipes", JSON.stringify(data))
+        
         showRecipes(data.recipes)
-    }else{
-    displayMatches(filters[3].value, filters)
-    }
 
+
+    }else{
+        displayMatches(filters[3].value, filters)
+        }
+
+}
+
+
+async function getRandom(number, tagString){
+    const queryString = `/api/random?number=${number}&tags=${tagString}`
+    const response = await fetch(queryString)
+    const data = await response.json()
+    return data
 }
 
 function showRecipes(arr){
     console.log(arr)
+    document.querySelector('.recipes').innerHTML = ""
     arr.forEach(recipe=>{
         console.log(recipe)
         var element = document.createElement("div")
         element.id = recipe.id
-        
-        
+      
         const html =  `
             <div class="recipe" onclick="showDetails(this.parentElement.id)">                                        
             <img src=${recipe.image} alt=${recipe.title}>
