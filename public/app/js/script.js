@@ -3,12 +3,12 @@ var ingredientsToAdd = [];
 var ingredientsToShop = [];
 
      
-function getDishes(){
+async function getDishes(){
     if (localStorage.getItem("dishes")===null){
         return "Add some dishes to your list"
     }      
     else {
-        return (localStorage.getItem("dishes"))
+        return await getRandom(1, "main")
     };
 }
 
