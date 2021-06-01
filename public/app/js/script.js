@@ -1,7 +1,6 @@
 var thingToDrag = "";
 var ingredientsToAdd = [];
 var ingredientsToShop = [];
-
      
 async function getDishes(){
     if (localStorage.getItem("dishes")===null){
