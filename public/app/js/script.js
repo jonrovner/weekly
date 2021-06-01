@@ -1,40 +1,41 @@
 var thingToDrag = "";
 var ingredientsToAdd = [];
 var ingredientsToShop = [];
-     
-async function getDishes(){
+
+   
+ async function getDishes(){
     if (localStorage.getItem("dishes")===null){
-        const data = await getRandom(2, "main")
-        console.log(data)
-        return data.recipes
+        const results = await getRandom(1, "")
+        
+        localStorage.setItem("dishes", JSON.stringify(results.recipes))
+        return results.recipes
     }      
     else {
-        return localStorage.getItem("dishes")
+        return JSON.parse(localStorage.getItem("dishes"))
         
     };
 }
 
 async function populateMenu() {
-    const dishes = await getDishes();         
-    console.log(dishes)
-   
-        dishes.forEach(d => {
-            const dish = d.title;
-            const element = document.createElement("div");
-            element.classList.add("menuitem");
-            element.id = d.id
-            element.innerHTML = ` 
-                    <img src="${d.image}" alt="" class="cardImage"/> 
-                    <p class=\"dishTitle\" draggable=\"true\" ondragstart=\"drag(this)\">${dish}</p>
-                    <div class=\"dishControls\"> 
-                        <button onclick=\"showDetails(this.parentElement.parentElement.id)\">i</button>
-                        <button onclick=\"deleteDish(event)\">x</button>
-                    </div>`;
-            document.querySelector('#menu').appendChild(element);  
-        });
-        localStorage.setItem("dishes", JSON.stringify(dishes));
+    document.querySelector('#menu').innerText = ""
+    const dishes = await getDishes();
+         
+    dishes.forEach(function(d) {
+    const dish = d.title;
+    const element = document.createElement("div");
+    element.classList.add("menuitem");
+    element.id = d.id
+    element.innerHTML = ` 
+            <img src="${d.image}" alt="" class="cardImage"/> 
+            <p class=\"dishTitle\" draggable=\"true\" ondragstart=\"drag(this)\">${dish}</p>
+            <div class=\"dishControls\"> 
+                <button onclick=\"showDetails(this.parentElement.parentElement.id)\">i</button>
+                <button onclick=\"deleteDish(event)\">x</button>
+            </div>`;
+    document.querySelector('#menu').appendChild(element);  
+    });
     
-
+        
 }
 
 
@@ -147,21 +148,20 @@ function deleteDish(event){
 }
 
 async function showDetails(id){
-                
-    const dishes = JSON.parse(localStorage.getItem("temporaryRecipes"))
-    console.log(dishes)
-    let data = dishes.recipes.find(dish=>dish.id==id)
     
-    localStorage.setItem("temporaryRecipe", JSON.stringify(data)) 
+    const data = await fetch(`/api/${id}`)
+    const res = await data.json()
+    
+    localStorage.setItem("temporaryRecipe", JSON.stringify(res)) 
     
     const html = `
-        <h1>${data.title}</h1>
-        <img src=${data.image}>
-        <p class="summary">${data.summary}</p>
+        <h1>${res.title}</h1>
+        <img src=${res.image}>
+        <p class="summary">${res.summary}</p>
         <h2>Ingredients</h2>
         <p class="ingredients"></p>
         <h2>Instructions</h2>
-        <p class="instructions">${data.instructions}</p>
+        <p class="instructions">${res.instructions}</p>
         <div class="infoControls">
         <button onclick="addToMyList(this)">Add</button>
         <button type="button" onclick="toggleShow(this)">close</button>
@@ -170,27 +170,29 @@ async function showDetails(id){
     var text = ""
     const element = document.querySelector('.infoWindow')
     element.innerHTML = html
-    data.extendedIngredients.forEach(ingredient=>{text += ingredient.name+", "})
+    res.extendedIngredients.forEach(ingredient=>{text += ingredient.name+", "})
     element.querySelector('.ingredients').innerText = text
     element.classList.add("show")
     element.id = id
     window.scrollTo(0,0)
+    document.querySelector('main').classList.add("hide")
     
 }
 
 function toggleShow(e){
     document.querySelector('.infoWindow').classList.remove("show")
+    document.querySelector('main').classList.remove("hide")
     }
 
 async function getRecipes(event){
     event.preventDefault()
     const filters = [...event.target]
+    
+    
     if(Array.from(filters[3].value).length<2){
         var tagString = ""
         filters.forEach(filter => filter.value !== "" ? tagString += filter.value+"," : "")
-        const data = getRandom(12, tagString)
-        localStorage.setItem("temporaryRecipes", JSON.stringify(data))
-        
+        const data = await getRandom(12, tagString)
         showRecipes(data.recipes)
 
 
@@ -209,10 +211,10 @@ async function getRandom(number, tagString){
 }
 
 function showRecipes(arr){
-    console.log(arr)
+    
     document.querySelector('.recipes').innerHTML = ""
-    arr.forEach(recipe=>{
-        console.log(recipe)
+    arr.forEach(recipe => {
+        
         var element = document.createElement("div")
         element.id = recipe.id
       
@@ -220,7 +222,7 @@ function showRecipes(arr){
             <div class="recipe" onclick="showDetails(this.parentElement.id)">                                        
             <img src=${recipe.image} alt=${recipe.title}>
             <h3>${recipe.title}</h3>
-            <button onclick="showDetails(this.parentElement.id)">i</button>
+            <button>i</button>
             </div>`                 
         
         element.innerHTML = html
@@ -240,23 +242,32 @@ async function searchFood(word, optionsString){
     
 async function displayMatches(word, filterArray){
     const optionsString = "&diet="+filterArray[0].value+"&cuisine="+filterArray[1].value+"&type="+filterArray[2].value
-        console.log("optionsString: ", optionsString)                          
+                          
     document.querySelector('.recipes').innerHTML = ""
     const recipes = await searchFood(word, optionsString)
-    await showRecipes(recipes.results)                         
+     
+    showRecipes(recipes.results)                         
 }
 
-function addToMyList(e){
+ async function addToMyList(e){
+   
+    const dishes = await getDishes()
+
+    const recipe = JSON.parse(localStorage.getItem("temporaryRecipe"))
     
-    console.log(e.parentElement)
-    const dishes = getDishes()
-    const newDishes = dishes.concat(JSON.parse(localStorage.getItem("temporaryRecipe")))
-    localStorage.setItem("dishes", JSON.stringify(newDishes));
-    populateMenu();
+    
+    const existent = dishes.includes(recipe)
+    
+    if (existent == false){
+        dishes.push(recipe)
+        
+        localStorage.setItem("dishes", JSON.stringify(dishes));
+        populateMenu();
+    }
 
 }
 function handleView(event){
-    console.log(event.target)
+    
     const options = Array.from(document.querySelectorAll('.option'))
     options.forEach(e => e.classList.toggle('selected'))
     if(event.target.id == "myList"){
@@ -270,8 +281,8 @@ function handleView(event){
 
 populateMenu();
 
-document.querySelector('.main').addEventListener('click', handleWeekClick)
-document.querySelector('.searchForm').addEventListener('submit', getRandom)
+//document.querySelector('.main').addEventListener('click', handleWeekClick)
+document.querySelector('.searchForm').addEventListener('submit', getRecipes)
 //document.querySelector('.viewSelector').addEventListener('click', handleView)
 const options = Array.from(document.querySelectorAll('.option'))
 options.forEach(e => e.addEventListener('click', handleView))

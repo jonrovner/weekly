@@ -18,6 +18,7 @@ app.get('/api/random', async (req, res) => {
         console.log(queryString)
         const data = await fetch(queryString)
         const results = await data.json() 
+        
         res.json(results)
     } catch (err) {
         return res.status(500).json({
