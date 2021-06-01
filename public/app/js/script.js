@@ -6,6 +6,7 @@ var ingredientsToShop = [];
 async function getDishes(){
     if (localStorage.getItem("dishes")===null){
         const data = await getRandom(2, "main")
+        console.log(data)
         return data.recipes
     }      
     else {
@@ -275,7 +276,7 @@ document.querySelector('.searchForm').addEventListener('submit', getRandom)
 //document.querySelector('.viewSelector').addEventListener('click', handleView)
 const options = Array.from(document.querySelectorAll('.option'))
 options.forEach(e => e.addEventListener('click', handleView))
-console.log(options)
+
 
 
 
