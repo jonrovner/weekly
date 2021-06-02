@@ -1,6 +1,4 @@
 var thingToDrag = "";
-var ingredientsToAdd = [];
-var ingredientsToShop = [];
 
    
  async function getDishes(){
@@ -40,10 +38,10 @@ async function populateMenu() {
 
 
 function handleWeekClick(e){
+    console.log(e.target.innerText)
+    const content = e.target.innerText;
     
-    const content = e.currentTarget.textContent;
-    
-    var dishes = JSON.parse(localStorage.getItem("dishes"));
+    /* var dishes = JSON.parse(localStorage.getItem("dishes"));
     var x = search(content, dishes);
     var arr = x.ingredients;
     arr.forEach((e) => {
@@ -51,10 +49,10 @@ function handleWeekClick(e){
         { if ( ingredientsToShop[i] === e) { ingredientsToShop.splice(i, 1); }}
     });
     let unique = [...new Set(ingredientsToShop)];
-    document.querySelector("#shoppingList").innerHTML = unique.join(", ");
+    document.querySelector("#shoppingList").innerHTML = unique.join(", "); */
 
-    if (e.currentTarget.textContent !== ""){
-        e.currentTarget.textContent = "";
+    if (e.target.innerText !== ""){
+        e.target.innerText = "";
     }
 }
 
@@ -64,10 +62,10 @@ function allowDrop(e) {
 
 function drag(e) {
     thingToDrag = e.innerHTML
-    var dishes = JSON.parse(localStorage.getItem("dishes"));
+    /* var dishes = JSON.parse(localStorage.getItem("dishes"));
     var x = search(e.textContent, dishes);
     var arr = x.ingredients;
-    arr.forEach((e) => ingredientsToAdd.push(e));
+    arr.forEach((e) => ingredientsToAdd.push(e)); */
 }
 
 function search(nameKey, myArray){
@@ -81,61 +79,12 @@ function search(nameKey, myArray){
 function drop(e) {
     e.preventDefault();
     document.getElementById(e.target.id).innerHTML = thingToDrag;
-    ingredientsToAdd.forEach((i) => ingredientsToShop.push(i));
+    //ingredientsToAdd.forEach((i) => ingredientsToShop.push(i));
     ingredientsToAdd = [];
-    let unique = [...new Set(ingredientsToShop)];
-    document.querySelector("#shoppingList").innerHTML = unique.join(", ");
+    /* let unique = [...new Set(ingredientsToShop)];
+    document.querySelector("#shoppingList").innerHTML = unique.join(", "); */
 }
 
-function addIngredient(e){
-    e.preventDefault();
-    const ingredient = (document.querySelector('[name=ingredient]')).value;
-    ingredientsToAdd.push(ingredient);
-    var ing = document.createElement("p");
-    ing.innerHTML = ingredient;
-    document.querySelector("#ingredientsToAdd").appendChild(ing);
-    document.querySelector('[name=ingredient]').value= "";
-    
-}
-
-function addDish(e){
-    e.preventDefault();
-    let objectToadd = {
-        name: (document.querySelector('[name=item]')).value,
-        ingredients:ingredientsToAdd,
-                };   
-    
-    var dishes = JSON.parse(localStorage.getItem("dishes"));
-    dishes.push(objectToadd);
-    localStorage.setItem("dishes", JSON.stringify(dishes));
-    
-    document.querySelector("#menu").innerHTML = "";
-    populateMenu();
-    
-    document.querySelector("#ingredientsToAdd").innerHTML="";
-    ingredientsToAdd = [];
-    
-}
-
-function openAddDishForm(){
-    //$('.addDishes').addClass("visible");
-}
-
-function closeAddForm(){
-// $('.addDishes').removeClass("visible");
-}
-
-function editDish(event){
-    const dishName = event.parentElement.parentElement.lastElementChild.id;
-    var dishes = JSON.parse(localStorage.getItem("dishes"));
-    const dish = dishes.filter(x => x.name == dishName);
-    var ings = dish[0].ingredients;
-    const form = document.querySelector('.addDishes');
-    form.item.value = dishName;
-    form.ingredient.value = ings.join(" ");
-    deleteDish(event);
-    openAddDishForm()
-}
 
 function deleteDish(element){
     
@@ -294,7 +243,8 @@ document.querySelector('.searchForm').addEventListener('submit', getRecipes)
 //document.querySelector('.viewSelector').addEventListener('click', handleView)
 const options = Array.from(document.querySelectorAll('.option'))
 options.forEach(e => e.addEventListener('click', handleView))
-
+const weekdays = Array.from(document.querySelectorAll('.main'))
+weekdays.forEach(weekday => weekday.addEventListener('click', handleWeekClick))
 
 
 
