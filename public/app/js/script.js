@@ -30,7 +30,7 @@ async function populateMenu() {
             <p class=\"dishTitle\" draggable=\"true\" ondragstart=\"drag(this)\">${dish}</p>
             <div class=\"dishControls\"> 
                 <button onclick=\"showDetails(this.parentElement.parentElement.id)\">i</button>
-                <button onclick=\"deleteDish(event)\">x</button>
+                <button onclick=\"deleteDish(this)\">x</button>
             </div>`;
     document.querySelector('#menu').appendChild(element);  
     });
@@ -137,11 +137,19 @@ function editDish(event){
     openAddDishForm()
 }
 
-function deleteDish(event){
+function deleteDish(element){
     
-    const dishName = event.path[2].children[1].innerText;
+    const id = element.parentElement.parentElement.id;
+    
     var dishes = JSON.parse(localStorage.getItem("dishes"));
-    const newDishes = dishes.filter(x => x.title !== dishName);
+    var newDishes = [];
+    for (var i=0; i<dishes.length; i++){
+        
+        if (dishes[i].id.toString() !== id){
+            newDishes.push(dishes[i])
+        }
+    }
+    
     localStorage.setItem("dishes", JSON.stringify(newDishes));
     document.querySelector("#menu").innerHTML = "";
     populateMenu();

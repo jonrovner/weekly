@@ -246,11 +246,8 @@ main {
 }
 
 .recipe h3 {
-  margin-top: 2%;
+  width: 60%;
   margin-left: 0.5rem;
-  font-size: 1rem;
-  text-align: left;
-  justify-self: flex-start !important;
 }
 
 .recipe img {
@@ -265,13 +262,10 @@ main {
 }
 
 .recipe button {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
   border-radius: 1.5rem;
-  margin-left: auto;
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  font-size: 1.1rem;
+  padding-right: 0.5rem;
 }
 
 .searchForm {
