@@ -137,6 +137,7 @@ main {
 
 .menuitem {
   height: 5rem;
+  width: 100%;
   max-width: 65rem;
   display: -ms-grid;
   display: grid;
@@ -438,7 +439,6 @@ main {
 }
 
 .searchForm button {
-  margin: auto;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -450,7 +450,6 @@ main {
   height: 2.5rem;
   width: 6rem;
   font-family: 'Amatic SC', cursive;
-  margin-left: 35%;
 }
 
 .searchForm input {

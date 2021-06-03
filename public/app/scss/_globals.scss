@@ -105,6 +105,7 @@ main{
 
 .menuitem {
     height: 5rem;
+    width: 100%;
     max-width: 65rem;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -355,7 +356,7 @@ main{
         }
     }
     button{
-        margin: auto;
+        
         appearance: none;
         border:none;
         color: white;
@@ -365,7 +366,7 @@ main{
         height: 2.5rem;
         width: 6rem;
         font-family: 'Amatic SC', cursive;
-        margin-left:35%;
+        
     }
     input{
         text-align: center;
