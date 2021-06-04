@@ -1,3 +1,206 @@
+.week {
+  width: 960px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 0.5fr (1fr)[7];
+      grid-template-columns: 0.5fr repeat(7, 1fr);
+  -ms-grid-rows: 25px 50px 50px;
+      grid-template-rows: 25px 50px 50px;
+  row-gap: 0.5rem;
+  -webkit-column-gap: 0.5rem;
+          column-gap: 0.5rem;
+}
+
+.week .main {
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.8rem;
+}
+
+.week .item {
+  position: relative;
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 0.3rem;
+  display: -ms-grid;
+  display: grid;
+  place-content: center;
+}
+
+.menu {
+  width: 90%;
+  margin: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 0.5rem;
+}
+
+@media (min-width: 40em) {
+  .menu {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (min-width: 64em) {
+  .menu {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+  }
+}
+
+.menuitem {
+  height: 3rem;
+  width: 100%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 2fr 3fr 1fr;
+      grid-template-columns: 2fr 3fr 1fr;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 0.3rem;
+  cursor: move;
+  -webkit-transition: all 0.15s;
+  transition: all 0.15s;
+  overflow: hidden;
+}
+
+.menuitem .dishTitle {
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.75rem;
+  margin-top: 0.1rem;
+  margin-bottom: 0.1rem;
+}
+
+.menuitem img {
+  height: 3rem;
+}
+
+.menuitem .dishControls {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-right: 0.2rem;
+  -ms-flex-item-align: center;
+      align-self: center;
+  justify-self: end;
+}
+
+.menuitem button {
+  margin-left: 0.1rem;
+  padding: 0.3rem;
+}
+
+.recipes {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.recipe {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.recipe h3 {
+  width: 60%;
+  margin-left: 0.5rem;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1rem;
+}
+
+.recipe img {
+  width: 6rem;
+  height: 4rem;
+}
+
+.recipe .overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.recipe button {
+  border-radius: 1.5rem;
+  padding-left: 0.5rem;
+  font-size: 1.1rem;
+  padding-right: 0.5rem;
+}
+
+.searchForm {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  justify-items: center;
+  margin-bottom: 2rem;
+}
+
+.searchForm select {
+  width: 30%;
+  padding: 0.3rem;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 1rem;
+}
+
+.searchForm select option {
+  width: 4rem;
+  height: 2rem;
+  padding: 0.5rem;
+}
+
+.searchForm button {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: none;
+  color: white;
+  background: #2ecc71;
+  border-radius: 5px;
+  padding: 0.5rem;
+  height: 2.5rem;
+  width: 6rem;
+  font-family: "Amatic SC", cursive;
+}
+
+.searchForm input {
+  text-align: center;
+  width: 90%;
+  margin: 0.5rem auto;
+}
+
 html {
   height: 100vh;
 }
@@ -118,10 +321,6 @@ main {
   font-size: small;
 }
 
-.main {
-  font-family: "Open Sans", sans-serif;
-}
-
 .title {
   display: -ms-grid;
   display: grid;
@@ -129,114 +328,9 @@ main {
   justify-items: center;
 }
 
-.week {
-  width: 960px;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: 0.5fr (1fr)[7];
-      grid-template-columns: 0.5fr repeat(7, 1fr);
-  -ms-grid-rows: 25px 50px 50px;
-      grid-template-rows: 25px 50px 50px;
-  row-gap: 0.5rem;
-  -webkit-column-gap: 0.5rem;
-          column-gap: 0.5rem;
-}
-
-.item {
-  position: relative;
-  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
-          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
-  border-radius: 0.3rem;
-  display: -ms-grid;
-  display: grid;
-  place-content: center;
-}
-
-.main {
-  font-size: 0.8rem;
-}
-
 .switchView {
   text-align: center;
   margin: 1rem;
-}
-
-.menu {
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  gap: 0.5rem;
-}
-
-@media (min-width: 40em) {
-  .menu {
-    display: -ms-grid;
-    display: grid;
-    -ms-grid-columns: 1fr 1fr 1fr;
-        grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-
-@media (min-width: 64em) {
-  .menu {
-    display: -ms-grid;
-    display: grid;
-    -ms-grid-columns: 1fr 1fr 1fr 1fr;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 1rem;
-  }
-}
-
-.menuitem {
-  height: 3rem;
-  width: 14.3rem;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: 2fr 3fr 1fr;
-      grid-template-columns: 2fr 3fr 1fr;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
-          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
-  border-radius: 0.3rem;
-  cursor: move;
-  -webkit-transition: all 0.15s;
-  transition: all 0.15s;
-  overflow: hidden;
-}
-
-.menuitem .dishTitle {
-  font-family: "Open Sans", sans-serif;
-  font-size: 0.75rem;
-  margin-top: 0.1rem;
-  margin-bottom: 0.1rem;
-}
-
-.menuitem img {
-  height: 3rem;
-}
-
-.menuitem .dishControls {
-  margin-right: 0.2rem;
-  -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
-      align-self: center;
-  -ms-grid-column-align: end;
-      justify-self: end;
-}
-
-.menuitem button {
-  margin-left: 0.1rem;
-  padding: 0.3rem;
 }
 
 .ingredientsList {
@@ -298,135 +392,6 @@ main {
   font-size: smaller;
 }
 
-.recipes {
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-
-.recipe {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  margin-bottom: 0.5rem;
-  padding-right: 0.5rem;
-}
-
-.recipe h3 {
-  width: 60%;
-  margin-left: 0.5rem;
-  font-family: "Open Sans", sans-serif;
-  font-size: 1rem;
-}
-
-.recipe img {
-  width: 6rem;
-  height: 4rem;
-}
-
-.recipe .overlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
-.recipe button {
-  border-radius: 1.5rem;
-  padding-left: 0.5rem;
-  font-size: 1.1rem;
-  padding-right: 0.5rem;
-}
-
-.searchForm {
-  margin-bottom: 2rem;
-}
-
-.search {
-  margin-top: 1rem;
-}
-
-.infoWindow {
-  display: none;
-}
-
-.infoWindow.show {
-  font-family: "Noto Sans JP", sans-serif;
-  width: 90%;
-  padding: 1rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  position: relative;
-  -webkit-box-shadow: 10px 10px 10px 10px gray;
-          box-shadow: 10px 10px 10px 10px gray;
-}
-
-.infoWindow.show button {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  margin: 1rem;
-  padding: 1rem;
-  -webkit-box-shadow: 2px 2px 2px 2px gray;
-          box-shadow: 2px 2px 2px 2px gray;
-}
-
-.infoWindow.show img {
-  height: 10rem;
-}
-
-.infoWindow.show p {
-  font-size: 0.8rem;
-  width: 80%;
-}
-
-.infoWindow.show h1,
-.infoWindow.show h2 {
-  font-size: 1rem;
-  width: 80%;
-  text-align: center;
-  -ms-grid-column-align: center;
-      justify-self: center;
-}
-
-.infoWindow.show .ingredients {
-  font-style: italic;
-}
-
-.infoWindow.show .instructions,
-.infoWindow.show ol {
-  font-size: 0.75rem;
-  width: 80%;
-}
-
-.infoWindow.show .infoControls {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.infoWindow.show #closeInfo {
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-}
-
 .showBtn {
   margin: 1rem;
   padding: 1rem;
@@ -478,55 +443,6 @@ main {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-}
-
-.searchForm {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  justify-items: center;
-}
-
-.searchForm select {
-  width: 30%;
-  padding: 0.3rem;
-  border-radius: 5px;
-  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
-          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
-  margin-bottom: 1rem;
-}
-
-.searchForm select option {
-  width: 4rem;
-  height: 2rem;
-  padding: 0.5rem;
-}
-
-.searchForm button {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  border: none;
-  color: white;
-  background: #2ecc71;
-  border-radius: 5px;
-  padding: 0.5rem;
-  height: 2.5rem;
-  width: 6rem;
-  font-family: "Amatic SC", cursive;
-}
-
-.searchForm input {
-  text-align: center;
-  width: 90%;
-  margin: 0.5rem auto;
 }
 
 .hide {
