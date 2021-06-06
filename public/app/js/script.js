@@ -1,4 +1,5 @@
 var thingToDrag = "";
+var searchNumber = 0;
 
 async function getDishes() {
   if (localStorage.getItem("dishes") === null) {
@@ -123,6 +124,7 @@ async function showDetails(id) {
   element.querySelector(".ingredients").innerText = text;
   element.classList.add("show");
   document.querySelector(".waiting").style.visibility = "hidden";
+  window.removeEventListener('scroll', handleScroll)
   element.id = id;
   window.scrollTo(0, 0);
   document.querySelector("main").classList.add("hide");
@@ -131,11 +133,14 @@ async function showDetails(id) {
 function toggleShow(e) {
   document.querySelector(".infoWindow").classList.remove("show");
   document.querySelector("main").classList.remove("hide");
+  window.addEventListener('scroll', handleScroll)
 }
 
 async function getRecipes(event) {
   event.preventDefault();
+  
   document.querySelector(".waiting").style.visibility = "visible";
+  
   const filters = [...event.target];
 
   if (Array.from(filters[3].value).length < 2) {
@@ -143,10 +148,11 @@ async function getRecipes(event) {
     filters.forEach((filter) =>
       filter.value !== "" ? (tagString += filter.value + ",") : ""
     );
-    const data = await getRandom(12, tagString);
+    const data = await getRandom(50, tagString);
     document.querySelector(".waiting").style.visibility = "hidden";
     showRecipes(data.recipes);
   } else {
+    searchNumber=0;
     displayMatches(filters[3].value, filters);
   }
 }
@@ -177,6 +183,25 @@ function showRecipes(arr) {
   });
 }
 
+function showMore(arr){
+  arr.forEach((recipe) => {
+    var element = document.createElement("div");
+    element.id = recipe.id;
+
+    const html = `
+            <div class="recipe" onclick="showDetails(this.parentElement.id)">                                        
+            <img src=${recipe.image} alt=${recipe.title}>
+            <h3>${recipe.title}</h3>
+            <button>i</button>
+            </div>`;
+
+    element.innerHTML = html;
+    document.querySelector(".waiting").style.visibility = "hidden";
+    document.querySelector(".recipes").append(element);
+  });
+
+}
+
 async function searchFood(word, optionsString) {
   const queryString = `/api/search?word=${word}${optionsString}`;
   const response = await fetch(queryString);
@@ -191,7 +216,9 @@ async function displayMatches(word, filterArray) {
     "&cuisine=" +
     filterArray[1].value +
     "&type=" +
-    filterArray[2].value;
+    filterArray[2].value +
+    "&offset=" + 
+    searchNumber;
 
   document.querySelector(".recipes").innerHTML = "";
   const recipes = await searchFood(word, optionsString);
@@ -223,6 +250,59 @@ function handleView(event) {
   }
 }
 
+
+async function handleScroll() {
+  
+  const {scrollTop, scrollHeight, clientHeight} = document.documentElement
+  const waiting = document.querySelector(".waiting")
+  const bottom = document
+    .querySelector('.recipes')
+    .getBoundingClientRect()
+    .bottom
+    
+  if (bottom < clientHeight - 50){
+    waiting.style.top = bottom; 
+    waiting.style.visibility = "visible";
+
+    
+    setTimeout(async () => {
+      var recipes = await getMoreRecipes(searchNumber)
+      showMore(recipes.results)
+    }, 1000)
+    
+  }
+    
+  
+  
+  
+}
+
+async function getMoreRecipes(offset){
+  searchNumber += 12
+  const formElement = document.querySelector('.searchForm')
+  const formChildren = Array.from(formElement.children)
+  
+  var queryString = "api/search?word="+formChildren[6].value
+
+  queryString = formChildren[1].value !== " " 
+    ? queryString += "&diet="+formChildren[1].value 
+    : queryString
+  queryString = formChildren[2].value !== " " 
+    ? queryString += "&cuisine="+formChildren[2].value 
+    : queryString 
+  queryString = formChildren[3].value !== " " 
+    ? queryString += "&type="+formChildren[3].value 
+    : queryString
+  queryString += "&offset="+ searchNumber
+  console.log(queryString)
+
+  const response = await fetch(queryString);
+  const data = await response.json();
+  console.log(data)
+  return data
+
+}
+
 populateMenu();
 
 //document.querySelector('.main').addEventListener('click', handleWeekClick)
@@ -234,3 +314,5 @@ const weekdays = Array.from(document.querySelectorAll(".main"));
 weekdays.forEach((weekday) =>
   weekday.addEventListener("click", handleWeekClick)
 );
+const recipes = document.querySelector('.recipes')
+window.addEventListener('scroll', handleScroll)

@@ -32,9 +32,11 @@ app.get('/api/search', async (req, res) => {
     try {
         console.log(req.query)
         var str = ""
+       
         str = req.query.diet !== "" ? str+"&diet="+req.query.diet : str
         str = req.query.cuisine !== "" ? str+"&cuisine="+req.query.cuisine : str
         str = req.query.type !== "" ? str+"&type="+req.query.type : str
+        str = req.query.offset !== 0 ? str+"&offset="+req.query.offset : str
         console.log(str)
         const queryString = `https://api.spoonacular.com/recipes/complexSearch?query=${req.query.word}&number=12${str}&apiKey=${process.env.APIKEY}`
         console.log(queryString)
