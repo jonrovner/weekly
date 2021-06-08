@@ -124,7 +124,7 @@ async function showDetails(id) {
   element.querySelector(".ingredients").innerText = text;
   element.classList.add("show");
   document.querySelector(".waiting").style.visibility = "hidden";
-  window.removeEventListener('scroll', handleScroll)
+  
   element.id = id;
   window.scrollTo(0, 0);
   document.querySelector("main").classList.add("hide");
@@ -133,28 +133,16 @@ async function showDetails(id) {
 function toggleShow(e) {
   document.querySelector(".infoWindow").classList.remove("show");
   document.querySelector("main").classList.remove("hide");
-  window.addEventListener('scroll', handleScroll)
+ 
 }
 
 async function getRecipes(event) {
   event.preventDefault();
-  
   document.querySelector(".waiting").style.visibility = "visible";
-  
   const filters = [...event.target];
-
-  if (Array.from(filters[3].value).length < 2) {
-    var tagString = "";
-    filters.forEach((filter) =>
-      filter.value !== "" ? (tagString += filter.value + ",") : ""
-    );
-    const data = await getRandom(50, tagString);
-    document.querySelector(".waiting").style.visibility = "hidden";
-    showRecipes(data.recipes);
-  } else {
-    searchNumber=0;
-    displayMatches(filters[3].value, filters);
-  }
+  searchNumber=0;
+  displayMatches(filters[3].value, filters);
+  
 }
 
 async function getRandom(number, tagString) {
@@ -173,7 +161,7 @@ function showRecipes(arr) {
     const html = `
             <div class="recipe" onclick="showDetails(this.parentElement.id)">                                        
             <img src=${recipe.image} alt=${recipe.title}>
-            <h3>${recipe.title}</h3>
+            <h5>${recipe.title}</h5>
             <button>i</button>
             </div>`;
 
@@ -181,6 +169,10 @@ function showRecipes(arr) {
     document.querySelector(".waiting").style.visibility = "hidden";
     document.querySelector(".recipes").append(element);
   });
+  const moreButton = document.createElement("button")
+  moreButton.onclick = getMoreRecipes
+  moreButton.innerText = "more"
+  document.querySelector(".more").append(moreButton);
 }
 
 function showMore(arr){
@@ -191,7 +183,7 @@ function showMore(arr){
     const html = `
             <div class="recipe" onclick="showDetails(this.parentElement.id)">                                        
             <img src=${recipe.image} alt=${recipe.title}>
-            <h3>${recipe.title}</h3>
+            <h5>${recipe.title}</h5>
             <button>i</button>
             </div>`;
 
@@ -240,6 +232,7 @@ async function addToMyList(e) {
     populateMenu();
   }
 }
+
 function handleView(event) {
   const options = Array.from(document.querySelectorAll(".option"));
   options.forEach((e) => e.classList.toggle("selected"));
@@ -251,7 +244,7 @@ function handleView(event) {
 }
 
 
-async function handleScroll() {
+/* async function handleScroll() {
   
   const {scrollTop, scrollHeight, clientHeight} = document.documentElement
   const waiting = document.querySelector(".waiting")
@@ -268,38 +261,33 @@ async function handleScroll() {
     setTimeout(async () => {
       var recipes = await getMoreRecipes(searchNumber)
       showMore(recipes.results)
-    }, 1000)
-    
-  }
-    
-  
-  
-  
-}
+    }, 1000)    
+  }     
+} */
 
-async function getMoreRecipes(offset){
+async function getMoreRecipes(){
   searchNumber += 12
   const formElement = document.querySelector('.searchForm')
   const formChildren = Array.from(formElement.children)
-  
-  var queryString = "api/search?word="+formChildren[6].value
-
-  queryString = formChildren[1].value !== " " 
-    ? queryString += "&diet="+formChildren[1].value 
+  console.log(formChildren) 
+  var queryString = "api/search?word="+formChildren[4].value
+  const filters = Array.from(formChildren[1].children)
+  console.log(filters)
+  queryString = filters[0].value !== " " 
+    ? queryString += "&diet="+filters[0].value 
     : queryString
-  queryString = formChildren[2].value !== " " 
-    ? queryString += "&cuisine="+formChildren[2].value 
+  queryString = filters[1].value !== " " 
+    ? queryString += "&cuisine="+filters[1].value 
     : queryString 
-  queryString = formChildren[3].value !== " " 
-    ? queryString += "&type="+formChildren[3].value 
+  queryString = filters[2].value !== " " 
+    ? queryString += "&type="+filters[2].value 
     : queryString
   queryString += "&offset="+ searchNumber
   console.log(queryString)
 
   const response = await fetch(queryString);
   const data = await response.json();
-  console.log(data)
-  return data
+  showMore(data.results)
 
 }
 
@@ -311,8 +299,9 @@ document.querySelector(".searchForm").addEventListener("submit", getRecipes);
 const options = Array.from(document.querySelectorAll(".option"));
 options.forEach((e) => e.addEventListener("click", handleView));
 const weekdays = Array.from(document.querySelectorAll(".main"));
-weekdays.forEach((weekday) =>
-  weekday.addEventListener("click", handleWeekClick)
-);
-const recipes = document.querySelector('.recipes')
-window.addEventListener('scroll', handleScroll)
+weekdays.forEach((weekday) =>{
+  weekday.addEventListener("click", handleWeekClick);
+  weekday.addEventListener('drop', drop);
+  weekday.addEventListener('dragover', allowDrop)
+});
+

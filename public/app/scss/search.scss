@@ -28,8 +28,19 @@
       font-family: "Amatic SC", cursive;
     }
     input {
+      height: 2.5rem;
+      background-color: lightgreen;
       text-align: center;
       width: 90%;
       margin: 0.5rem auto;
+      border: none;
+      border-radius: 5px;
+      font-family: 'Amatic SC';
+      font-size: 2rem;
+    }
+    .filters{
+      display:flex;
+      align-items: center;
+      justify-content: space-between;
     }
   }

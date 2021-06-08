@@ -43,8 +43,26 @@
 }
 
 .searchForm input {
+  height: 2.5rem;
+  background-color: lightgreen;
   text-align: center;
   width: 90%;
   margin: 0.5rem auto;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Amatic SC';
+  font-size: 2rem;
+}
+
+.searchForm .filters {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 /*# sourceMappingURL=search.css.map */

@@ -95,6 +95,10 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   margin-right: 0.2rem;
   -ms-flex-item-align: center;
       align-self: center;
@@ -102,13 +106,36 @@
 }
 
 .menuitem button {
+  border: 1px solid lightgray;
+  border-radius: 100%;
   margin-left: 0.1rem;
-  padding: 0.3rem;
+  padding: -1rem;
+  background-color: white;
+  color: black;
 }
 
 .recipes {
   margin-left: 1rem;
   margin-right: 1rem;
+}
+
+@media (min-width: 40em) {
+  .recipes {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 64em) {
+  .recipes {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+  }
 }
 
 .recipe {
@@ -124,13 +151,17 @@
           justify-content: space-between;
   margin-bottom: 0.5rem;
   padding-right: 0.5rem;
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 0.3rem;
+  max-height: 4rem;
+  overflow: hidden;
 }
 
-.recipe h3 {
+.recipe h5 {
   width: 60%;
   margin-left: 0.5rem;
   font-family: "Open Sans", sans-serif;
-  font-size: 1rem;
 }
 
 .recipe img {
@@ -196,9 +227,27 @@
 }
 
 .searchForm input {
+  height: 2.5rem;
+  background-color: lightgreen;
   text-align: center;
   width: 90%;
   margin: 0.5rem auto;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Amatic SC';
+  font-size: 2rem;
+}
+
+.searchForm .filters {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .infoWindow {
@@ -519,6 +568,11 @@ main {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.more {
+  margin-top: 1rem;
+  text-align: center;
 }
 
 .hide {

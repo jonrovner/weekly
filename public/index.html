@@ -34,35 +34,21 @@
                     <div class="item">Saturday</div>
                     <div class="item">Sunday</div>
                     <div class="item">Lunch</div>
-                    <div class="item main" id="main1" ondrop="drop(event)"
-                        ondragover="allowDrop(event)"></div>
-                    <div class="item main" id="main2" ondrop="drop(event)"
-                        ondragover="allowDrop(event)"></div>
-                    <div class="item main" id="main3" ondrop="drop(event)"
-                        ondragover="allowDrop(event)"></div>
-                    <div class="item main" id="main4" ondrop="drop(event)"
-                        ondragover="allowDrop(event)"></div>
-                    <div class="item main" id="main5" ondrop="drop(event)"
-                        ondragover="allowDrop(event)"></div>
-                    <div class="item main" id="main6" ondrop="drop(event)"
-                        ondragover="allowDrop(event)"></div>
-                    <div class="item main" id="main7" ondrop="drop(event)"
-                        ondragover="allowDrop(event)"></div>
+                    <div class="item main" id="main1"></div>
+                    <div class="item main" id="main2"></div>
+                    <div class="item main" id="main3"></div>
+                    <div class="item main" id="main4"></div>
+                    <div class="item main" id="main5"></div>
+                    <div class="item main" id="main6"></div>
+                    <div class="item main" id="main7"></div>
                     <div class="item">Dinner</div>
-                    <div class="item main" id="main8" ondrop="drop(event)"
-                        ondragover="allowDrop(event)"></div>
-                    <div class="item main" id="main9" ondrop="drop(event)"
-                        ondragover="allowDrop(event)"></div>
-                    <div class="item main" id="main10" ondrop="drop(event)"
-                        ondragover="allowDrop(event)"></div>
-                    <div class="item main" id="main11" ondrop="drop(event)"
-                        ondragover="allowDrop(event)"></div>
-                    <div class="item main" id="main12" ondrop="drop(event)"
-                        ondragover="allowDrop(event)"></div>
-                    <div class="item main" id="main13" ondrop="drop(event)"
-                        ondragover="allowDrop(event)"></div>
-                    <div class="item main" id="main14" ondrop="drop(event)"
-                        ondragover="allowDrop(event)"></div>
+                    <div class="item main" id="main8"></div>
+                    <div class="item main" id="main9"></div>
+                    <div class="item main" id="main10"></div>
+                    <div class="item main" id="main11"></div>
+                    <div class="item main" id="main12"></div>
+                    <div class="item main" id="main13"></div>
+                    <div class="item main" id="main14"></div>
                 </div>
 
                 <p class="infotext hide-for-mobile">Drag dishes into calendar.
@@ -81,7 +67,7 @@
 
                 <form class="searchForm">
                     <h2>Recipe search</h2>
-
+                    <div class="filters">
                     <select name="diet" id="diet">
                         <option value="">diet</option>
                         <option value="vegan">Vegan</option>
@@ -114,6 +100,7 @@
                         <option value="breakfast">Breakfast</option>
                         <option value="snack">Snack</option>
                     </select>
+                    </div>
                     <br>
                     <label for="foodsearch">type ingredient or dish (leave blank
                         for random)</label>
@@ -123,7 +110,7 @@
                 </form>
 
                 <div class="recipes"></div>
-
+                <div class="more"></div>
                 <div class="credits">
                     <p>powered by Spoonacular Food Api</p>
 
